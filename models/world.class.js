@@ -5,6 +5,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    statusBar = new StatusBar();
     background_music = new Audio('audio/music.mp3');
 
 
@@ -24,11 +25,12 @@ class World {
 
     checkCollisions() {
         setInterval(() => {
-            this.level1.enemies.forEach((enemy) => {
+            this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                    this.character.energy -= 5;
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.energy);
                 }
-            })
+            });
         }, 200);
     }
 
@@ -38,12 +40,13 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
+       
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0);
-
+        this.addToMap(this.statusBar);
 
 
         // Draw() wird immer wieder aufgerufen
