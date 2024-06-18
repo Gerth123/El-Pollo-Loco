@@ -1,4 +1,4 @@
-class Keyboard extends Character {
+class Keyboard {
     LEFT = false; 
     RIGHT = false;
     UP = false;
