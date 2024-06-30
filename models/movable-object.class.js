@@ -55,11 +55,13 @@ class MovableObject extends DrawableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
     }
-
-    playAnimationOneTime(images) {
-        for (let currentImageIndex = 0; currentImageIndex < images.length; currentImageIndex++) {
-            let path = images[currentImageIndex];
+ 
+    async playAnimationOneTime(images) {
+        for (let i = 0; i < images.length; i++) {
+            let path = images[i] ;
             this.img = this.imageCache[path];
+            this.currentImage++;
+            await new Promise(resolve => setTimeout(resolve, 500));
         }
     }
 

@@ -14,11 +14,11 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.playBackgroundMusic();
         this.draw();
         this.setWorld();
-        this.playBackgroundMusic();
         this.run();
-    }
+     }
 
     setWorld() {
         this.character.world = this;
