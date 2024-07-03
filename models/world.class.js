@@ -5,7 +5,9 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar = new StatusBar();
+    statusBarLives = new StatusBarLives();
+    statusBarBottles = new StatusBarBottles();
+    statusBarCoins = new StatusBarCoins();
     throwableObjects = [];
     background_music = new Audio('audio/music.mp3');
 
@@ -14,7 +16,7 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.playBackgroundMusic();
+        // this.playBackgroundMusic();
         this.draw();
         this.setWorld();
         this.run();
@@ -42,7 +44,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
+                this.statusBarLives.setPercentage(this.character.energy);
             }
         });
     }
@@ -60,7 +62,9 @@ class World {
         this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarLives);
+        this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarBottles);
 
 
         // Draw() wird immer wieder aufgerufen
@@ -81,7 +85,7 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        // mo.drawFrame(this.ctx);
 
 
 
