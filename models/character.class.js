@@ -2,6 +2,9 @@ class Character extends MovableObject {
     height = 280;
     y = 50;
     speed = 10;
+    bottles = 0;
+    coins = 0;
+    direction = 'right';
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -59,11 +62,13 @@ class Character extends MovableObject {
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
+                this.direction = 'right';
                 this.otherDirection = false;
                 this.walking_sound.play();
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
+                this.direction = 'left';
                 this.otherDirection = true;
                 this.walking_sound.play();
             }

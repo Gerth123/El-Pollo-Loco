@@ -34,10 +34,29 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.character.energy > 0 && this.character.bottles > 0) {
+            this.character.bottles--;
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
         }
+    }
+
+    checkCollectObjects() {
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                coin.collect();
+                coin.remove();
+                this.statusBarCoins.setPercentage(this.character.coins);
+            }
+        });
+
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                bottle.collect();
+                bottle.remove();
+                this.statusBarBottles.setPercentage(this.character.bottles);
+            }
+        });
     }
 
     checkCollisions() {
@@ -85,7 +104,7 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        // mo.drawFrame(this.ctx);
+        mo.drawFrame(this.ctx);
 
 
 
