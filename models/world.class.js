@@ -8,6 +8,8 @@ class World {
     statusBarLives = new StatusBarLives();
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
+    settings = new Settings();
+    fullScreen = new FullScreen();
     throwableObjects = [];
     background_music = new Audio('audio/music.mp3');
 
@@ -20,7 +22,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-     }
+    }
 
     setWorld() {
         this.character.world = this;
@@ -74,7 +76,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
-       
+
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
@@ -84,7 +86,9 @@ class World {
         this.addToMap(this.statusBarLives);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottles);
-
+        this.addToMap(this.settings);
+        this.addToMap(this.fullScreen);
+        this.addDescription();
 
         // Draw() wird immer wieder aufgerufen
         let self = this;
@@ -113,6 +117,16 @@ class World {
         }
     }
 
+    addDescription() {
+        this.ctx.fillStyle = "black";
+        this.ctx.font = "bold 16px Arial";
+        this.ctx.textAlign = 'flex-start';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillText("Left/Right =            Arrow Keys", 300, 50);
+        this.ctx.fillText("Jump =                   Space", 300, 75);
+        this.ctx.fillText("Throw Bottle =       D", 300, 100);
+    }
+
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -129,4 +143,6 @@ class World {
         this.background_music.loop = true;
         this.background_music.play();
     }
+
+
 }

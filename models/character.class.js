@@ -1,8 +1,8 @@
 class Character extends MovableObject {
     height = 280;
-    y = 50;
+    y = 70;
     speed = 10;
-    bottles = 0;
+    bottles = 100;
     coins = 0;
     direction = 'right';
     IMAGES_WALKING = [
@@ -45,6 +45,26 @@ class Character extends MovableObject {
     world;
     walking_sound = new Audio('audio/running.mp3');
 
+//     // Array mit allen Audio-Objekten
+// audioElements = [
+//     walking_sound,
+//     // andere Audio-Elemente hinzufügen
+// ];
+
+// // Funktion zum Stummschalten aller Audios
+//  muteAllAudio() {
+//     audioElements.forEach(audio => {
+//         audio.muted = true;
+//     });
+// }
+
+// // Funktion zum Aktivieren aller Audios
+//  unmuteAllAudio() {
+//     audioElements.forEach(audio => {
+//         audio.muted = false;
+//     });
+// }
+
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -75,7 +95,7 @@ class Character extends MovableObject {
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
-                this.playAnimationOneTime(this.IMAGES_WALKING);
+                this.playAnimationSlow(this.IMAGES_JUMPING);
             }
 
 
@@ -90,7 +110,7 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT);
             }
             else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
+                this.playAnimationSlow(this.IMAGES_JUMPING);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
             }

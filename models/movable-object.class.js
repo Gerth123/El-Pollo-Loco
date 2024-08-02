@@ -6,6 +6,10 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
 
+    constructor() {
+        super();
+    }
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -19,7 +23,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) {
             return true;
         }
-        return this.y < 140;
+        return this.y < 200;
     }
 
     isColliding(mo) {
@@ -54,9 +58,27 @@ class MovableObject extends DrawableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
     }
+
+    playAnimationSlow(images) {
+        if (!this.animationInterval) {
+            this.animationInterval = setInterval(() => {
+                let i = this.currentImage % images.length;
+                let path = images[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+                if (!this.isAboveGround()) {
+                    clearInterval(this.animationInterval);
+                    this.animationInterval = null;
+                    let path = images[images.length - 1];
+                    this.img = this.imageCache[path];
+                    
+                }
+            }, 100);
+        }
+    }
  
     async playAnimationOneTime(images) {
-        for (let i = 0; i < images.length; i++) {
+        for (let i = 0; i < images.length - 2; i++) {
             let path = images[i] ;
             this.img = this.imageCache[path];
             this.currentImage++;
