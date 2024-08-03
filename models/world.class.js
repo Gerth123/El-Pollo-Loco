@@ -8,8 +8,6 @@ class World {
     statusBarLives = new StatusBarLives();
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
-    settings = new Settings();
-    fullScreen = new FullScreen();
     throwableObjects = [];
     background_music = new Audio('audio/music.mp3');
 
@@ -63,6 +61,10 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
+            // if(this.character.isJumpingOnTopOf(enemy)) {
+
+            //     enemy.enemyChickenDie();
+            // } else 
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBarLives.setPercentage(this.character.energy);
@@ -86,8 +88,6 @@ class World {
         this.addToMap(this.statusBarLives);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottles);
-        this.addToMap(this.settings);
-        this.addToMap(this.fullScreen);
         this.addDescription();
 
         // Draw() wird immer wieder aufgerufen

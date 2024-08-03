@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>El Pollo Loco</title>
-    <link rel="icon" type="image/x-icon" href="img/7_statusbars/3_icons/icon_salsa_bottle.png">
+    <link rel="icon" type="image/x-icon" href="img/7_statusbars/3_icons/icon_salsa_bottle.png" />
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/character.class.js"></script>
@@ -15,8 +15,6 @@
     <script src="models/status-bar-lives.class.js"></script>
     <script src="models/status-bar-bottles.class.js"></script>
     <script src="models/status-bar-coins.class.js"></script>
-    <script src="models/settings.class.js"></script>
-    <script src="models/full-screen.class.js"></script>
     <script src="models/world.class.js"></script>
     <script src="models/background-object.class.js"></script>
     <script src="models/keyboard.class.js"></script>
@@ -25,16 +23,32 @@
     <script src="models/endboss.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
-</head>
-<body onload="init()">
-    <img src="img/5_background/background_behind_canvas.svg" alt="Background Desert" class="backgroundBehindCanvas">
-    <h1>El Pollo Loco</h1>
-    
-
-    <canvas id="canvas" width="828" height="552">
-
-
-
-    </canvas>
-</body>
+  </head>
+  <body onload="init()">
+    <div id="fullscreen" class="fullscreen">
+      <h1>El Pollo Loco</h1>
+      <div class="panelOverCanvas"></div>
+      <canvas id="canvas" width="828" height="552"> </canvas>
+      <div class="overlay">
+        <div class="panelUnderCanvas">
+            <img src="img/icons/enable_sound.png" alt="Enable Sound" class="enableSound d-none" id="enableSound" onclick="enableSound()">
+            <img src="img/icons/disable_sound.png" alt="Disable Sound" class="disableSound" id="disableSound" onclick="disableSound()">
+          <img
+            src="img/7_statusbars/fullscreen_false.png"
+            alt="Fullscreen"
+            onclick="fullscreen()"
+            class="fullscreenFalse"
+            id="fullscreenFalse"
+          />
+          <img
+            src="img/7_statusbars/fullscreen_true.png"
+            alt="Close Fullscreen"
+            onclick="closeFullscreen()"
+            class="fullscreenTrue d-none"
+            id="fullscreenTrue"
+          />
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

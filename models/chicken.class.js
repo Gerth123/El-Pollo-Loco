@@ -1,7 +1,7 @@
 class Chicken extends MovableObject {
-    y = 425;
-    height = 60;
-    width = 70;
+    y = 415;
+    height = 70;
+    width = 80;
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -29,6 +29,12 @@ class Chicken extends MovableObject {
     }
 
     isDead() {
+        if (condition) {
+
+        }
+    }
+
+    isHit() {
         if (condition) {
 
         }

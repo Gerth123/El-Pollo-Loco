@@ -28,10 +28,17 @@ class MovableObject extends DrawableObject {
 
     isColliding(mo) {
         return this.x + this.width > mo.x &&
-        this.y + this.height > mo.y &&
-        this.x < mo.x &&
-        this.y < mo.y + mo.height;
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height;
     }
+
+    // isColliding(mo) {
+    //     return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+    //         this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+    //         this.x +this.offset.left < mo.x + mo.width - mo.offset.right &&
+    //         this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+    // }
 
     hit() {
         this.energy -= 5;
@@ -45,13 +52,13 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
-        return timepassed < 1; 
+        return timepassed < 1;
     }
 
     isDead() {
         return this.energy == 0;
     }
-    
+
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -71,17 +78,20 @@ class MovableObject extends DrawableObject {
                     this.animationInterval = null;
                     let path = images[images.length - 1];
                     this.img = this.imageCache[path];
-                    
+
                 }
             }, 100);
         }
     }
- 
-    async playAnimationOneTime(images) {
-        for (let i = 0; i < images.length - 2; i++) {
-            let path = images[i] ;
-            this.img = this.imageCache[path];
-            this.currentImage++;
+
+    async playAnimationOneTimeSlow(images) {
+        for (let i = 0; i < images.length; i++) {
+            setInterval(() => {
+                let path = images[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+            }, 100);
+
             await new Promise(resolve => setTimeout(resolve, 500));
         }
     }

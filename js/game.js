@@ -49,3 +49,42 @@ window.addEventListener('keyup', (e) => {
         keyboard.D = false;
     }
 })
+
+function fullscreen() {
+    let fullscreen = document.getElementById("fullscreen");
+    openFullscreen(fullscreen);
+    document.getElementById("fullscreenFalse").classList.add("d-none");
+    document.getElementById("fullscreenTrue").classList.remove("d-none");
+}
+
+function openFullscreen(elem) {
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+      elem.msRequestFullscreen();
+    }
+  }
+
+  function closeFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { /* Safari */
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE11 */
+      document.msExitFullscreen();
+    }
+    document.getElementById("fullscreenFalse").classList.remove("d-none");
+    document.getElementById("fullscreenTrue").classList.add("d-none");
+  }
+
+  function disableSound() {
+    document.getElementById("enableSound").classList.remove("d-none");
+    document.getElementById("disableSound").classList.add("d-none");
+  }
+
+  function enableSound() {
+    document.getElementById("enableSound").classList.add("d-none");
+    document.getElementById("disableSound").classList.remove("d-none");
+  }
