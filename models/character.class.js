@@ -2,7 +2,7 @@ class Character extends MovableObject {
     height = 300;
     y = 80;
     speed = 10;
-    bottles = 100;
+    bottles = 0;
     coins = 0;
     direction = 'right';
     offset = {
@@ -54,7 +54,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png',
     ]
-
     world;
 
 
@@ -81,7 +80,7 @@ class Character extends MovableObject {
                 this.direction = 'right';
                 this.otherDirection = false;
                 if (this.musicEnabled) {
-                    this.audio_elements.walking_sound.play();
+                    // this.audio_elements.walking_sound.play();
                 }
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
@@ -89,7 +88,7 @@ class Character extends MovableObject {
                 this.direction = 'left';
                 this.otherDirection = true;
                 if (this.musicEnabled) {
-                    this.audio_elements.walking_sound.play();
+                    // this.audio_elements.walking_sound.play();
                 }
             }
 
@@ -122,4 +121,31 @@ class Character extends MovableObject {
     jump() {
         this.speedY = 27;
     }
+
+    checkCollectObjects() {
+        this.world.level.coins.forEach((coin, index) => {
+            if (this.isColliding(coin)) {
+                this.world.level.coins.splice(index, 1);
+                this.coins += 5;
+                this.world.statusBarCoins.setPercentage(this.coins);
+                // this.statusBarCoins.setPercentage(this.character.coins);
+            }
+        });
+
+        this.world.level.bottles.forEach((bottle, index) => {
+            if (this.isColliding(bottle)) {
+                this.world.level.bottles.splice(index, 1);
+                this.bottles += 5;
+                this.world.statusBarBottles.setPercentage(this.bottles);
+            }
+        });
+    }
+
+    isColliding(mo) {
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height;
+    }
+
 }

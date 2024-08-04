@@ -29,6 +29,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.character.checkCollectObjects();
             this.checkFirstContactToBoss();
         }, 200);
     }
@@ -38,26 +39,11 @@ class World {
             this.character.bottles--;
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.statusBarBottles.setPercentage(this.character.bottles);
         }
     }
 
-    checkCollectObjects() {
-        this.level.coins.forEach((coin) => {
-            if (this.character.isColliding(coin)) {
-                coin.collect();
-                coin.remove();
-                this.statusBarCoins.setPercentage(this.character.coins);
-            }
-        });
-
-        this.level.bottles.forEach((bottle) => {
-            if (this.character.isColliding(bottle)) {
-                bottle.collect();
-                bottle.remove();
-                this.statusBarBottles.setPercentage(this.character.bottles);
-            }
-        });
-    }
+   
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
