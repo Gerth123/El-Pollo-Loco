@@ -9,8 +9,7 @@ class World {
     statusBarBottles = new StatusBarBottles();
     statusBarCoins = new StatusBarCoins();
     throwableObjects = [];
-    background_music = new Audio('audio/music.mp3');
-
+    class_endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -30,6 +29,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkFirstContactToBoss();
         }, 200);
     }
 
@@ -72,16 +72,27 @@ class World {
         });
     }
 
+    checkFirstContactToBoss() {
+        if (this.character.x > 3830) {
+            this.class_endboss.hadFirstContact = true;
+            
+        }
+        this.class_endboss.animate();
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
-
+        
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
+        
         this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
@@ -140,9 +151,11 @@ class World {
     }
 
     playBackgroundMusic() {
-        this.background_music.loop = true;
-        this.background_music.play();
+        if (this.character.musicEnabled) {
+            this.character.audio_elements.background_music.loop = true;
+            this.character.audio_elements.background_music.play();
+        }
     }
 
-
+    // this.level.enemies[10].hadFirstContact = false; Reset if game finished
 }

@@ -4,8 +4,7 @@ let keyboard = new Keyboard();
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
-    
+    world = new World(canvas, keyboard);    
 }
 
 window.addEventListener('keydown', (e) => {
@@ -82,9 +81,15 @@ function openFullscreen(elem) {
   function disableSound() {
     document.getElementById("enableSound").classList.remove("d-none");
     document.getElementById("disableSound").classList.add("d-none");
+    world.character.musicEnabled = false;
+    world.character.audio_elements.background_music.pause();
   }
 
   function enableSound() {
     document.getElementById("enableSound").classList.add("d-none");
     document.getElementById("disableSound").classList.remove("d-none");
+    world.character.audio_elements.background_music.play();
+    world.character.musicEnabled = true;
   }
+
+  

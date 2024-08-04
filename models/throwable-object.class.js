@@ -1,7 +1,18 @@
 class ThrowableObject extends MovableObject {
     collectedBottles = 20;
+    x;
+    y;
+    height;
+    width;
+    IMAGES_SPINNING_BOTTLE = [
+        'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
+        'img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
+        'img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png',
+        'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png',
+    ];
     constructor(x, y) {
-        super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
+        super().loadImage(this.IMAGES_SPINNING_BOTTLE[0]);
+        this.loadImages(this.IMAGES_SPINNING_BOTTLE);
         this.x = x;
         this.y = y;
         this.height = 80;
@@ -24,6 +35,9 @@ class ThrowableObject extends MovableObject {
                     this.x += 11;
                 }, 25);
             }
+            setInterval(() => {
+                this.playAnimation(this.IMAGES_SPINNING_BOTTLE);
+            }, 5);
         }
         if (world.character.direction == 'left') {
             if (world.keyboard.LEFT == true) {
@@ -43,5 +57,11 @@ class ThrowableObject extends MovableObject {
                 }, 25);
             }
         }
+    }
+
+    animateFlyingBottle() {
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_SPINNING_BOTTLE);
+        }, 200);
     }
 }

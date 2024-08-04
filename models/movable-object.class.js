@@ -52,7 +52,7 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
-        return timepassed < 1;
+        return timepassed < 0.7;
     }
 
     isDead() {
@@ -66,42 +66,51 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
-    playAnimationSlow(images) {
-        if (!this.animationInterval) {
-            this.animationInterval = setInterval(() => {
-                let i = this.currentImage % images.length;
-                let path = images[i];
+playAnimationSlow(images, animationSpeed) {
+    if (!this.animationInterval) {
+        this.animationInterval = setInterval(() => {
+            let i = this.currentImage % images.length;
+            let path = images[i];
+            this.img = this.imageCache[path];
+            this.currentImage++;
+            if (!this.isAboveGround()) {
+                clearInterval(this.animationInterval);
+                this.animationInterval = null;
+                let path = images[images.length - 1];
                 this.img = this.imageCache[path];
-                this.currentImage++;
-                if (!this.isAboveGround()) {
-                    clearInterval(this.animationInterval);
-                    this.animationInterval = null;
-                    let path = images[images.length - 1];
-                    this.img = this.imageCache[path];
-
-                }
-            }, 100);
-        }
+            }
+        }, animationSpeed);
     }
+}
 
-    async playAnimationOneTimeSlow(images) {
-        for (let i = 0; i < images.length; i++) {
-            setInterval(() => {
-                let path = images[i];
-                this.img = this.imageCache[path];
-                this.currentImage++;
-            }, 100);
+    async playAnimationOneTime(images) {
+    for (let i = 0; i < images.length; i++) {
+        setInterval(() => {
+            let path = images[i];
+            this.img = this.imageCache[path];
+            this.currentImage++;
+        }, 100);
 
-            await new Promise(resolve => setTimeout(resolve, 500));
-        }
+        await new Promise(resolve => setTimeout(resolve, 500));
     }
+}
 
-    moveRight() {
-        this.x += this.speed;
-        this.otherDirection = false;
-    }
+moveRight() {
+    this.x += this.speed;
+    this.otherDirection = false;
+}
 
-    moveLeft() {
-        this.x -= this.speed;
-    }
+moveLeft() {
+    this.x -= this.speed;
+}
+
+animate() {
+    setInterval(() => {
+        this.moveLeft();
+    }, 1000 / 60);
+
+    setInterval(() => {
+        this.playAnimation(this.IMAGES_WALKING);
+    }, 200);
+}
 }

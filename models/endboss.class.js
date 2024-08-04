@@ -3,6 +3,12 @@ class Endboss extends MovableObject {
     width = 250;
     y = 110;
     speed = 10;
+    offset = {
+        top: 25,
+        left: 130,
+        right: 40,
+        bottom: 30,
+    };
     img;
     hadFirstContact = false;
 
@@ -44,32 +50,28 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
-    async animate() {
-
-        await setTimeout(() => {
-
-
-            // if (hadFirstContact === true) {
-            let i = 0;
-            setInterval(() => {
-                if (i < 4) {
-                    this.playAnimationOneTime(this.IMAGES_WALKING);
-                    this.speed = 10;
-                } else if (i < 8) {
-                    this.playAnimationOneTime(this.IMAGES_ALERT);
+    animate() {
+        if (this.hadFirstContact === true) {
+    
+            setTimeout(() => {
+                this.playAnimation(this.IMAGES_WALKING, 200);
+                this.speed = 10;
+    
+                setTimeout(() => {
+                    this.playAnimation(this.IMAGES_ALERT, 200);
                     this.speed = 0;
-                } else {
-                    this.playAnimationSlow(this.IMAGES_ATTACK);
-                    this.speed = 20;
-                    this.moveLeft();
-                }
-
-                i++;
-            }, 150);
-
-        }, 10000);
-        // }
-
-
+    
+                    setTimeout(() => {
+                        this.playAnimation(this.IMAGES_ATTACK, 3000);
+                        this.speed = 30;
+                        this.moveLeft();
+                    }, 500); // Verzögerung für die Angriffsanimation
+    
+                }, 500); // Verzögerung für die Alarm-Animation
+    
+            }, 50); // Verzögerung für die Geh-Animation
+    
+        }
     }
+    
 }
