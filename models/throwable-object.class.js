@@ -36,7 +36,7 @@ class ThrowableObject extends MovableObject {
                 this.speedY = 20;
                 this.applyGravity();
                 setInterval(() => {
-                    this.x += 21;
+                    this.x += 19;
                 }, 25);
             } else {
                 this.speedY = 20;
@@ -55,7 +55,7 @@ class ThrowableObject extends MovableObject {
                 this.speedY = 20;
                 this.applyGravity();
                 setInterval(() => {
-                    this.x -= 21;
+                    this.x -= 19;
                 }, 25);
             }
             if (world.keyboard.LEFT !== true) {
@@ -86,7 +86,7 @@ class ThrowableObject extends MovableObject {
                         world.class_endboss.hurt();
                         if (world.class_endboss.lifes == 0) {
                             world.class_endboss.die();
-                            setTimeout(() => {world.level.enemies.splice(enemyIndex, 1)}, 1800);
+                            setTimeout(() => {world.level.enemies.splice(enemyIndex, 1)}, 400);
                         }
                     }
                     setTimeout(() => {this.thrownObjects.splice(thrownObjectIndex, 1)}, 1000);

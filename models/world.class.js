@@ -10,6 +10,8 @@ class World {
     statusBarCoins = new StatusBarCoins();
     throwableObjects = [];
     class_endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
+    lastThrowTime = 0; // Zeitpunkt des letzten Flaschenwurfs
+    throwCooldown = 500;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -28,18 +30,26 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObjects();
             this.character.checkCollectObjects();
             this.checkFirstContactToBoss();
+            this.checkThrowObjects();
         }, 50);
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.character.energy > 0 && this.character.bottles > 0) {
+        const currentTime = Date.now(); // Aktuelle Zeit in Millisekunden
+        if (
+            this.keyboard.D &&
+            this.character.energy > 0 &&
+            this.character.bottles > 0 &&
+            (currentTime - this.lastThrowTime >= this.throwCooldown)
+        ) {
             this.character.bottles--;
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.statusBarBottles.setPercentage(this.character.bottles);
+
+            this.lastThrowTime = currentTime; // Zeitpunkt des letzten Wurfes aktualisieren
         }
     }
 

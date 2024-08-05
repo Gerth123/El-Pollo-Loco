@@ -91,7 +91,7 @@ playAnimationSlow(images, animationSpeed) {
             this.currentImage++;
         
 
-        // await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 100));
     }
 }
 
