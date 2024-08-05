@@ -16,6 +16,7 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
+            
         }, 1000 / 25);
     }
 
@@ -27,20 +28,13 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height;
+        return (this.x + this.offset.x) + (this.width - this.offset.width) > (mo.x + mo.offset.x) &&
+            (this.y + this.offset.y) + (this.height - this.offset.height) > (mo.y + mo.offset.y) &&
+            (this.x + this.offset.x) < (mo.x + mo.offset.x) &&
+            (this.y + this.offset.y) < (mo.y + mo.offset.y) + (mo.height - mo.offset.height);
     }
 
-    // isColliding(mo) {
-    //     return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-    //         this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-    //         this.x +this.offset.left < mo.x + mo.width - mo.offset.right &&
-    //         this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
-    // }
-
-    hit() {
+    hit () {
         this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
@@ -66,6 +60,12 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+    playAnimationWithInterval(images, interval) {
+        setInterval(() => {
+            this.playAnimation(images);
+        }, interval);
+    }
+
 playAnimationSlow(images, animationSpeed) {
     if (!this.animationInterval) {
         this.animationInterval = setInterval(() => {
@@ -85,13 +85,13 @@ playAnimationSlow(images, animationSpeed) {
 
     async playAnimationOneTime(images) {
     for (let i = 0; i < images.length; i++) {
-        setInterval(() => {
+        
             let path = images[i];
             this.img = this.imageCache[path];
             this.currentImage++;
-        }, 100);
+        
 
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // await new Promise(resolve => setTimeout(resolve, 500));
     }
 }
 

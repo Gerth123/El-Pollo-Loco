@@ -1,12 +1,13 @@
 class Bottle extends MovableObject {
     y = 415;
+    x;
     height = 70;
     width = 80;
     offset = {
-        top: 25,
-        left: 130,
-        right: 40,
-        bottom: 30,
+        x: 30,
+        y: 15,
+        width: 50, 
+        height: 20,
     };
 
     IMAGES_ON_GROUND = [
@@ -16,6 +17,6 @@ class Bottle extends MovableObject {
 
     constructor(bottleNumber) {
         super().loadImage(this.IMAGES_ON_GROUND[bottleNumber]);
-        this.x = 300 + Math.random() * 4000;
+        this.x = 250 + Math.random() * 4000;
     }
 }

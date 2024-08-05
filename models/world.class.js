@@ -31,7 +31,7 @@ class World {
             this.checkThrowObjects();
             this.character.checkCollectObjects();
             this.checkFirstContactToBoss();
-        }, 200);
+        }, 50);
     }
 
     checkThrowObjects() {
@@ -51,19 +51,26 @@ class World {
 
             //     enemy.enemyChickenDie();
             // } else 
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(this.class_endboss) && this.character.energy > 50) {
+                this.character.energy -= 50;
+                this.character.hit();
+                this.character.x -= 200;
+                this.statusBarLives.setPercentage(this.character.energy);
+            } else if (this.character.isColliding(this.class_endboss) && this.character.energy <= 50) {
+                this.character.energy = 0;
+            } else if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBarLives.setPercentage(this.character.energy);
             }
         });
     }
+    
+       
 
     checkFirstContactToBoss() {
         if (this.character.x > 3830) {
             this.class_endboss.hadFirstContact = true;
-            
         }
-        this.class_endboss.animate();
     }
 
     draw() {
@@ -85,7 +92,6 @@ class World {
         this.addToMap(this.statusBarLives);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottles);
-        this.addDescription();
 
         // Draw() wird immer wieder aufgerufen
         let self = this;
@@ -105,23 +111,10 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
-
-
-
+        // mo.drawFrame(this.ctx);
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
-    }
-
-    addDescription() {
-        this.ctx.fillStyle = "black";
-        this.ctx.font = "bold 16px Arial";
-        this.ctx.textAlign = 'flex-start';
-        this.ctx.textBaseline = 'middle';
-        this.ctx.fillText("Left/Right =            Arrow Keys", 300, 50);
-        this.ctx.fillText("Jump =                   Space", 300, 75);
-        this.ctx.fillText("Throw Bottle =       D", 300, 100);
     }
 
     flipImage(mo) {
@@ -142,6 +135,4 @@ class World {
             this.character.audio_elements.background_music.play();
         }
     }
-
-    // this.level.enemies[10].hadFirstContact = false; Reset if game finished
 }

@@ -2,14 +2,14 @@ class Character extends MovableObject {
     height = 300;
     y = 80;
     speed = 10;
-    bottles = 0;
+    bottles = 10;
     coins = 0;
     direction = 'right';
     offset = {
-        top: 25,
-        left: 130,
-        right: 40,
-        bottom: 30,
+        x: 15,
+        y: 120,
+        width: 35,
+        height: 135,
     };
     musicEnabled = true;
     audio_elements = {
@@ -105,7 +105,7 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+                this.playAnimationOneTime(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT)
             }
@@ -128,7 +128,6 @@ class Character extends MovableObject {
                 this.world.level.coins.splice(index, 1);
                 this.coins += 5;
                 this.world.statusBarCoins.setPercentage(this.coins);
-                // this.statusBarCoins.setPercentage(this.character.coins);
             }
         });
 
@@ -142,10 +141,10 @@ class Character extends MovableObject {
     }
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height;
+        return this.x + this.offset.x + this.width - this.offset.width > mo.x + mo.offset.x &&
+            this.y + this.offset.y + this.height - this.offset.height > mo.y + mo.offset.y &&
+            this.x + this.offset.x < mo.x + mo.offset.x &&
+            this.y + this.offset.y < mo.y + mo.offset.y + mo.height - mo.offset.height;
     }
 
 }
