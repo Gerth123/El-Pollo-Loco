@@ -32,25 +32,32 @@
       <h1>El Pollo Loco</h1>
       <div class="panelOverCanvas"></div>
       <canvas id="canvas" width="828" height="552"> </canvas>
-      <div class="overlay">
-        <div class="panelUnderCanvas">
-            <img src="img/icons/enable_sound.png" alt="Enable Sound" class="enableSound d-none" id="enableSound" onclick="enableSound()">
-            <img src="img/icons/disable_sound.png" alt="Disable Sound" class="disableSound" id="disableSound" onclick="disableSound()">
-          <img
-            src="img/7_statusbars/fullscreen_false.png"
-            alt="Fullscreen"
-            onclick="fullscreen()"
-            class="fullscreenFalse"
-            id="fullscreenFalse"
-          />
-          <img
-            src="img/7_statusbars/fullscreen_true.png"
-            alt="Close Fullscreen"
-            onclick="closeFullscreen()"
-            class="fullscreenTrue d-none"
-            id="fullscreenTrue"
-          />
-        </div>
+      <div class="overlay" id="overlay">
+        <img src="img/9_intro_outro_screens/start/startscreen_2.png" alt="Startscreen" class="startImg">
+        <p class="startText" onclick="startGame()">Start game!</p>
+      </div>
+      <div class="panelUnderCanvas">
+        <img src="img/icons/enable_sound.png" alt="Disable Sound" class="disableSound" id="disableSound" onclick="disableSound()"/>
+        <img src="img/icons/disable_sound.png" alt="Enable Sound" class="enableSound d-none" id="enableSound" onclick="enableSound()" />
+        <img
+          src="img/7_statusbars/fullscreen_false.png"
+          alt="Fullscreen"
+          onclick="fullscreen()"
+          class="fullscreenFalse"
+          id="fullscreenFalse"
+        />
+        <img
+          src="img/7_statusbars/fullscreen_true.png"
+          alt="Close Fullscreen"
+          onclick="closeFullscreen()"
+          class="fullscreenTrue d-none"
+          id="fullscreenTrue"
+        />
+      </div>
+      <div class="description"> 
+        <p>Move Left/Right = Arrow Keys,</p>
+        <p>Jump = Space,</p>
+        <p>Throw Bottle = D</p>
       </div>
     </div>
   </body>

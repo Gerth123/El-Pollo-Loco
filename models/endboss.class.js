@@ -88,7 +88,8 @@ class Endboss extends MovableObject {
                     this.speed = 0;
                 } else if (this.animationEndbossIndex === 4) {
                     this.speed = 0;
-                    setInterval(() => { this.playAnimation(this.IMAGES_DEAD), 650});
+                    setInterval(() => { this.playAnimationOneTime(this.IMAGES_DEAD), 650});
+                    setTimeout(() => { this.x = -1000 }, 650);
                 }
             }
         }, 100);

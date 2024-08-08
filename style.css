@@ -16,6 +16,7 @@ h1 {
     font-size: 5em;
     letter-spacing: 5px;
     text-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
+    margin-top: -5svh;
 }
 
 canvas {
@@ -34,7 +35,7 @@ canvas {
 }
 
 .d-none {
-    display: none;
+    display: none !important;
 }
 
 .fullscreen {
@@ -50,11 +51,11 @@ canvas {
     background-size: 100svh 100%;
 }
 
-.fullscreen img {
+.panelUnderCanvas img {
     height: 40px;
 }
 
-.fullscreen img:hover {
+.panelUnderCanvas img:hover {
     cursor: pointer;
 }
 
@@ -68,4 +69,58 @@ canvas {
     canvas {
         height: 100svh;
     }
+}
+
+.description {
+    display: flex;
+    width: 700px;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.description p {
+    color: #709223;
+    font-size: 2em;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
+    margin-block-start: 0.7em;
+    margin-block-end: 0em;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.startImg {
+    height: 552px;
+    width: 828px;
+    padding-top: 14svh;
+}
+
+.startText {
+    color: rgb(238, 4, 4);
+    font-size: 5em;
+    letter-spacing: 5px;
+    text-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
+    margin-top: -45px;
+    background-color: #709223;
+    border-radius: 30px;
+    width: 400px;
+    height: 85px;
+    text-align: center;
+    text-justify: center;
+}
+
+.startText:hover {
+    cursor: pointer;
+    background-color: #70922380;
 }

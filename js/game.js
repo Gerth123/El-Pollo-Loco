@@ -4,7 +4,8 @@ let keyboard = new Keyboard();
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);    
+    world = new World(canvas, keyboard); 
+    pauseGame();
 }
 
 window.addEventListener('keydown', (e) => {
@@ -90,6 +91,17 @@ function openFullscreen(elem) {
     document.getElementById("disableSound").classList.remove("d-none");
     world.character.audio_elements.background_music.play();
     world.character.musicEnabled = true;
+  }
+
+  function startGame() {
+    document.getElementById("overlay").classList.add("d-none");
+    enableSound();
+
+  }
+
+  function pauseGame() {
+    disableSound();
+    document.getElementById("overlay").classList.remove("d-none");
   }
 
   
