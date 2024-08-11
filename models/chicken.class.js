@@ -8,6 +8,7 @@ class Chicken extends MovableObject {
         width: 10,
         height: 20,
     };
+    previousSpeed;
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -34,5 +35,14 @@ class Chicken extends MovableObject {
         if (condition) {
 
         }
+    }
+
+    pause() {
+        this.previousSpeed = this.speed;
+        this.speed = 0;
+    }
+
+    unpause() {
+        this.speed = this.previousSpeed;
     }
 }

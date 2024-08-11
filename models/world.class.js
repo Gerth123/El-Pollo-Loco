@@ -10,14 +10,13 @@ class World {
     statusBarCoins = new StatusBarCoins();
     throwableObjects = [];
     class_endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
-    lastThrowTime = 0; // Zeitpunkt des letzten Flaschenwurfs
+    lastThrowTime = 0;
     throwCooldown = 500;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        // this.playBackgroundMusic();
         this.draw();
         this.setWorld();
         this.run();

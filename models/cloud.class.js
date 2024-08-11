@@ -3,6 +3,7 @@ class Cloud extends MovableObject {
     height = 250;
     width = 500;
     speed = Math.random() * 0.3 + 0.2;
+    previousSpeed;
     
     
     constructor() {
@@ -16,5 +17,14 @@ class Cloud extends MovableObject {
         setInterval(() => {
             this.moveLeft();
         }, 1000 / 60);
-    }    
+    }
+    
+    pause() {
+        this.previousSpeed = this.speed;
+        this.speed = 0;
+    }
+
+    unpause() {
+        this.speed = this.previousSpeed;
+    }
 }

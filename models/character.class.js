@@ -16,6 +16,7 @@ class Character extends MovableObject {
         background_music: new Audio('audio/music.mp3'),
         walking_sound: new Audio('audio/running.mp3'),
     };
+    previousSpeed;
 
 
     IMAGES_WALKING = [
@@ -145,6 +146,15 @@ class Character extends MovableObject {
             this.y + this.offset.y + this.height - this.offset.height > mo.y + mo.offset.y &&
             this.x + this.offset.x < mo.x + mo.offset.x &&
             this.y + this.offset.y < mo.y + mo.offset.y + mo.height - mo.offset.height;
+    }
+
+    pause() {
+        this.previousSpeed = this.speed;
+        this.speed = 0;
+    }
+
+    unpause() {
+        this.speed = this.previousSpeed;
     }
 
 }

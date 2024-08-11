@@ -8,14 +8,15 @@ class LittleChicken extends MovableObject {
         width: 10,
         height: 20,
     };
+    previousSpeed;
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
         'img/3_enemies_chicken/chicken_small/1_walk/3_w.png',
     ];
-    
+
     IMAGE_DEAD = 'img/3_enemies_chicken/chicken_small/2_dead/dead.png';
-    
+
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -23,8 +24,6 @@ class LittleChicken extends MovableObject {
         this.speed = 0.15 + Math.random() * 0.35;
         this.animate();
     }
-
-    
 
     isDead() {
         if (condition) {
@@ -36,5 +35,14 @@ class LittleChicken extends MovableObject {
         if (condition) {
 
         }
+    }
+
+    pause() {
+        this.previousSpeed = this.speed;
+        this.speed = 0;
+    }
+
+    unpause() {
+        this.speed = this.previousSpeed;
     }
 }
