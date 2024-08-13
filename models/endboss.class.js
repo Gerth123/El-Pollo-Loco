@@ -91,6 +91,13 @@ class Endboss extends MovableObject {
                     this.speed = 0;
                     setInterval(() => { this.playAnimationOneTime(this.IMAGES_DEAD), 650 });
                     setTimeout(() => { this.x = -1000 }, 650);
+                    document.getElementById("overlayWin").classList.remove("d-none");
+                    setTimeout(() => {
+                        document.getElementById("overlayWin").classList.add("d-none");
+                        document.getElementById("overlay").classList.remove("d-none");
+                        pauseGame();
+                    }, 2000);
+
                 }
             }
         }, 100);

@@ -37,7 +37,18 @@
         <div class="overlay" id="overlay">
           <img src="img/9_intro_outro_screens/start/startscreen_2.png" alt="Startscreen" class="startImg" />
           <p class="startText" onclick="startGame()">Start game!</p>
+          <div class="legalNoticeAndPrivacyPolicyContainer">
+            <a href="legal-notice.html" class="legalNotice" target="_blank" rel="noreferrer noopener">Legal notice</a>
+            <a href="privacy-policy.html" class="privacyPolicy" target="_blank" rel="noreferrer noopener">Privacy legacy</a>
+          </div>
         </div>
+        <div class="overlayWin d-none" id="overlayWin">
+          <img src="img/9_intro_outro_screens/win/won_2.png" class="overlayWinImg" alt="You won!">
+        </div>
+        <div class="overlayLose d-none" id="overlayLose">
+          <img src="img/9_intro_outro_screens/game_over/oh no you lost!.png" class="overlayLoseImg" alt="You lost!">
+        </div>
+        <div class="overlayMenu d-none" id="overlayMenu"></div>
         <div class="panelUnderCanvas">
           <img src="img/icons/pause_button.png" alt="pause game" class="pauseGame" id="pauseGame" onclick="pauseGame()" />
           <img src="img/icons/unpause_button.png" alt="unpause game" class="unpauseGame d-none" id="unpauseGame" onclick="unpauseGame()" />
@@ -59,11 +70,15 @@
           />
         </div>
         <div class="description">
-          <p>Left/Right =</p><img src="img/icons/right_left.png" alt="arrow keys" class="descriptionImg">
-          <p>Jump =</p><img src="img/icons/spacebar.png" alt="space" class="descriptionImgSpacebar">
-          <p>Throw Bottle =</p><img src="img/icons/letter_d.png" alt="key D" class="descriptionImgD">
+          <p>Left/Right =</p>
+          <img src="img/icons/right_left.png" alt="arrow keys" class="descriptionImg" />
+          <p>Jump =</p>
+          <img src="img/icons/spacebar.png" alt="space" class="descriptionImgSpacebar" />
+          <p>Throw Bottle =</p>
+          <img src="img/icons/letter_d.png" alt="key D" class="descriptionImgD" />
         </div>
       </div>
     </div>
+    
   </body>
 </html>

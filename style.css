@@ -22,6 +22,16 @@ h1 {
 
 canvas {
     background-color: black;
+
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    cursor: pointer;
 }
 
 .panelUnderCanvas {
@@ -32,7 +42,7 @@ canvas {
     gap: 10px;
     width: 808px;
     height: 100px;
-    margin-top: -75px;
+    margin-top: -78px;
 }
 
 .d-none {
@@ -63,8 +73,33 @@ canvas {
     max-height: 730px;
 }
 
-.panelUnderCanvas img {
+.pauseGame {
     height: 40px;
+    margin-right: 4px;
+}
+
+.unpauseGame {
+    height: 50px;
+}
+
+.disableSound {
+    height: 40px;
+    width: 50px;
+}
+
+.enableSound {
+    height: 42px;
+    width: 50px;
+}
+
+.fullscreenFalse {
+    height: 40px;
+    width: 50px;
+}
+
+.fullscreenTrue {
+    height: 40px;
+    width: 50px;
 }
 
 .panelUnderCanvas img:hover {
@@ -91,7 +126,7 @@ canvas {
 }
 
 .description p {
-    color: #709223;
+    color: red;
     font-size: 2em;
     letter-spacing: 1px;
     text-shadow: 1px 1px 1px rgb(0, 0, 0, 0.5);
@@ -103,6 +138,7 @@ canvas {
     height: 35px;
     margin-left: -15px;
     padding-right: 10px;
+    filter: invert(90%);
 }
 
 .descriptionImgSpacebar {
@@ -110,12 +146,14 @@ canvas {
     margin-top: -12px;
     width: 60px;
     margin-right: 10px;
+    filter: invert(90%);
 }
 
 .descriptionImgD {
     width: 40px;
     margin-top: -5px;
     margin-left: -15px;
+    filter: invert(90%);
 }
 
 .overlay {
@@ -132,7 +170,6 @@ canvas {
 }
 
 .startImg {
-    padding-top: 5svh;
     height: 90svh;
     max-height: 700px;
     width: 80%;
@@ -140,12 +177,12 @@ canvas {
 }
 
 .startText {
-    color: rgb(238, 4, 4);
+    color: red;
     font-size: 4em;
     letter-spacing: 5px;
     text-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
     margin-top: -10svh;
-    background-color: #709223;
+    background-color: #ebebeb;
     border-radius: 30px;
     width: 30%;
     max-width: 350px;
@@ -158,5 +195,128 @@ canvas {
 
 .startText:hover {
     cursor: pointer;
-    background-color: #70922380;
+    background-color: rgb(141 141 141 / 50%);
+}
+
+.overlayWin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100svh;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlayWinImg {
+    height: 90svh;
+    max-height: 552px;
+    width: 80%;
+    max-width: 828px;
+}
+
+.overlayLose {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100svh;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlayLoseImg {
+    height: 552px;  
+    width: 828px;
+}
+
+.legalNoticeAndPrivacyPolicyContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding-top: 7svh;
+}
+
+.legalNotice {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1em;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px rgb(0, 0, 0, 0.5);
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    color: #ebebeb;
+}
+
+.privacyPolicy {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1em;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px rgb(0, 0, 0, 0.5);
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    color: #ebebeb;
+}
+
+.legalNoticeBackgroundImg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100svh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0.45;
+    z-index: -1;
+}
+
+.legalNoticeTextContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 80%;
+    padding-bottom: 5svh;
+}
+
+.legalNoticeText {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.privacyPolicyBackgroundImg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100svh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    opacity: 0.45;
+}
+
+.privacyPolicyTextContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 80%;
+    padding-bottom: 5svh;
+}
+
+.privacyPolicyText {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }

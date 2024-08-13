@@ -15,9 +15,6 @@ window.addEventListener('keydown', (e) => {
   if (e.keyCode == 38) {
     keyboard.UP = true;
   }
-  if (e.keyCode == 40) {
-    keyboard.DOWN = true;
-  }
   if (e.keyCode == 32) {
     keyboard.SPACE = true;
   }
@@ -35,9 +32,6 @@ window.addEventListener('keyup', (e) => {
   }
   if (e.keyCode == 38) {
     keyboard.UP = false;
-  }
-  if (e.keyCode == 40) {
-    keyboard.DOWN = false;
   }
   if (e.keyCode == 32) {
     keyboard.SPACE = false;
@@ -86,9 +80,11 @@ function disableSound() {
 function enableSound() {
   document.getElementById("enableSound").classList.add("d-none");
   document.getElementById("disableSound").classList.remove("d-none");
-  world.character.audio_elements.background_music.play();
   world.character.musicEnabled = true;
+  world.playBackgroundMusic();
 }
+
+
 
 function pauseGame() {
   document.getElementById("enableSound").classList.remove("d-none");
@@ -113,6 +109,8 @@ function startGame() {
   canvas = document.getElementById('canvas');
   world = new World(canvas, keyboard);
   enableSound();
+  setSpeedToZeroExceptCharacter();
+  setTimeout(resetSpeedExceptCharacter(), 2000);
 }
 
 function setSpeedToZero() {
@@ -125,8 +123,26 @@ function setSpeedToZero() {
   });
 }
 
+function setSpeedToZeroExceptCharacter() {
+  world.level.clouds.forEach((cloud) => {
+    cloud.pause();
+  });
+  world.level.enemies.forEach((enemy) => {
+    enemy.pause();
+  });
+}
+
 function resetSpeed() {
   world.character.unpause();
+  world.level.clouds.forEach((cloud) => {
+    cloud.unpause();
+  })
+  world.level.enemies.forEach((enemy) => {
+    enemy.unpause();
+  })
+}
+
+function resetSpeedExceptCharacter() {
   world.level.clouds.forEach((cloud) => {
     cloud.unpause();
   })

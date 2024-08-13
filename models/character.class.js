@@ -81,7 +81,7 @@ class Character extends MovableObject {
                 this.direction = 'right';
                 this.otherDirection = false;
                 if (this.musicEnabled) {
-                    // this.audio_elements.walking_sound.play();
+                    this.audio_elements.walking_sound.play();
                 }
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
@@ -89,7 +89,7 @@ class Character extends MovableObject {
                 this.direction = 'left';
                 this.otherDirection = true;
                 if (this.musicEnabled) {
-                    // this.audio_elements.walking_sound.play();
+                    this.audio_elements.walking_sound.play();
                 }
             }
 
@@ -106,6 +106,7 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
+                document.getElementById('overlayLose').classList.remove('d-none');
                 this.playAnimationOneTime(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT)
