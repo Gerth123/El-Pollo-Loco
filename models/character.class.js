@@ -104,19 +104,25 @@ class Character extends MovableObject {
 
         }, 1000 / 60);
 
-        setInterval(() => {
+        let intervalId = setInterval(() => {
             if (this.isDead()) {
-                document.getElementById('overlayLose').classList.remove('d-none');
                 this.playAnimationOneTime(this.IMAGES_DEAD);
+                document.getElementById('overlayLose').classList.remove('d-none');
+                setTimeout(() => {
+                    document.getElementById('overlayLose').classList.add('d-none');
+                    document.getElementById('overlay').classList.remove('d-none');
+                }, 2000);
+                clearInterval(intervalId);
+                disableSound();
             } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT)
-            }
-            else if (this.isAboveGround()) {
-                setTimeout(() => { this.playAnimation(this.IMAGES_JUMPING) }, 100);
+                this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isAboveGround()) {
+                setTimeout(() => { this.playAnimation(this.IMAGES_JUMPING); }, 100);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 50);
+        
 
     }
 
