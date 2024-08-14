@@ -22,6 +22,9 @@ h1 {
 
 canvas {
     background-color: black;
+    border: 3px solid rgb(248 227 219);
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
 
 }
 
@@ -42,7 +45,7 @@ a:hover {
     gap: 10px;
     width: 808px;
     height: 100px;
-    margin-top: -78px;
+    margin-top: -85px;
 }
 
 .d-none {
@@ -126,7 +129,7 @@ a:hover {
 }
 
 .description p {
-    color: red;
+    color: white;
     font-size: 2em;
     letter-spacing: 1px;
     text-shadow: 1px 1px 1px rgb(0, 0, 0, 0.5);
@@ -170,6 +173,7 @@ a:hover {
 }
 
 .startImg {
+    margin-top: 20px;
     height: 90svh;
     max-height: 700px;
     width: 80%;
@@ -237,12 +241,15 @@ a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-radius: 11px;
+    
 }
 
 .overlayLoseImg {
-    padding-top: 5px;
-    height: 552px;  
+    margin-top: 14px;
+    height: 554px;  
     width: 828px;
+    border-radius: 10px;
 }
 
 .legalNoticeAndPrivacyPolicyContainer {

@@ -12,6 +12,7 @@ class World {
     class_endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
     lastThrowTime = 0;
     throwCooldown = 500;
+    runIntervall;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -27,7 +28,7 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        this.runIntervall = setInterval(() => {
             this.checkCollisions();
             this.character.checkCollectObjects();
             this.checkFirstContactToBoss();
@@ -37,44 +38,46 @@ class World {
 
     checkThrowObjects() {
         const currentTime = Date.now(); // Aktuelle Zeit in Millisekunden
-        if (
-            this.keyboard.D &&
-            this.character.energy > 0 &&
-            this.character.bottles > 0 &&
-            (currentTime - this.lastThrowTime >= this.throwCooldown)
-        ) {
+        if (this.keyboard.D && this.character.energy > 0 && this.character.bottles > 0 && (currentTime - this.lastThrowTime >= this.throwCooldown)) {
             this.character.bottles--;
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.statusBarBottles.setPercentage(this.character.bottles);
-
             this.lastThrowTime = currentTime; // Zeitpunkt des letzten Wurfes aktualisieren
         }
     }
 
-   
+
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
-            // if(this.character.isJumpingOnTopOf(enemy)) {
-
-            //     enemy.enemyChickenDie();
-            // } else 
-            if (this.character.isColliding(this.class_endboss) && this.character.energy > 50) {
+        let hitEnemy = false;
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy) && this.character.y < 190 && enemy !== this.class_endboss && !hitEnemy && !this.character.energy <= 0) {
+                this.character.jump();
+                if (enemy.lives == 1) {
+                    enemy.die();
+                    setTimeout(() => { this.level.enemies.splice(index, 1); }, 500);
+                } else if (enemy.lives > 1) {
+                    enemy.lives--;
+                }
+                hitEnemy = true;
+            } else if (this.character.isColliding(this.class_endboss) && this.character.energy > 50) {
                 this.character.energy -= 50;
                 this.character.hit();
                 this.character.x -= 200;
                 this.statusBarLives.setPercentage(this.character.energy);
             } else if (this.character.isColliding(this.class_endboss) && this.character.energy <= 50) {
                 this.character.energy = 0;
-            } else if (this.character.isColliding(enemy)) {
+            } else if (this.character.isColliding(enemy) && !hitEnemy) {
                 this.character.hit();
                 this.statusBarLives.setPercentage(this.character.energy);
+                hitEnemy = true;
             }
         });
     }
-    
-       
+
+
+
 
     checkFirstContactToBoss() {
         if (this.character.x > 3830) {
@@ -88,13 +91,13 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
-        
+
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
-        
+
         this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);

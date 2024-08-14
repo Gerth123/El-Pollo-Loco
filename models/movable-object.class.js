@@ -11,12 +11,12 @@ class MovableObject extends DrawableObject {
     }
 
     applyGravity() {
-        setInterval(() => {
+        this.gravityInterval = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-            
+
         }, 1000 / 25);
     }
 
@@ -28,13 +28,25 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(mo) {
-        return (this.x + this.offset.x) + (this.width - this.offset.width) > (mo.x + mo.offset.x) &&
-            (this.y + this.offset.y) + (this.height - this.offset.height) > (mo.y + mo.offset.y) &&
-            (this.x + this.offset.x) < (mo.x + mo.offset.x) &&
-            (this.y + this.offset.y) < (mo.y + mo.offset.y) + (mo.height - mo.offset.height);
+        let thisLeft = this.x + this.offset.x;
+        let thisRight = thisLeft + (this.width - this.offset.width);
+        let thisTop = this.y + this.offset.y;
+        let thisBottom = thisTop + (this.height - this.offset.height);
+
+        let moLeft = mo.x + mo.offset.x;
+        let moRight = moLeft + (mo.width - mo.offset.width);
+        let moTop = mo.y + mo.offset.y;
+        let moBottom = moTop + (mo.height - mo.offset.height);
+
+        return thisRight >= moLeft &&
+            thisBottom >= moTop &&
+            thisLeft <= moRight &&
+            thisTop <= moBottom;
     }
 
-    hit () {
+
+
+    hit() {
         this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
@@ -60,57 +72,36 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
-    playAnimationWithInterval(images, interval) {
+    async playAnimationOneTime(images, time) {
+        for (let i = 0; i < images.length; i++) {
+
+            let path = images[i];
+            this.img = this.imageCache[path];
+            this.currentImage++;
+
+
+            await new Promise(resolve => setTimeout(resolve, time));
+        }
+    }
+
+    moveRight() {
+        this.x += this.speed;
+        this.otherDirection = false;
+    }
+
+    moveLeft() {
+        this.x -= this.speed;
+    }
+
+    animate() {
         setInterval(() => {
-            this.playAnimation(images);
-        }, interval);
-    }
+            this.moveLeft();
+        }, 1000 / 60);
 
-playAnimationSlow(images, animationSpeed) {
-    if (!this.animationInterval) {
-        this.animationInterval = setInterval(() => {
-            let i = this.currentImage % images.length;
-            let path = images[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
-            if (!this.isAboveGround()) {
-                clearInterval(this.animationInterval);
-                this.animationInterval = null;
-                let path = images[images.length - 1];
-                this.img = this.imageCache[path];
+        setInterval(() => {
+            if (!this.isDead()) {
+                this.playAnimation(this.IMAGES_WALKING);
             }
-        }, animationSpeed);
+        }, 200);
     }
-}
-
-    async playAnimationOneTime(images) {
-    for (let i = 0; i < images.length; i++) {
-        
-            let path = images[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
-        
-
-        await new Promise(resolve => setTimeout(resolve, 100));
-    }
-}
-
-moveRight() {
-    this.x += this.speed;
-    this.otherDirection = false;
-}
-
-moveLeft() {
-    this.x -= this.speed;
-}
-
-animate() {
-    setInterval(() => {
-        this.moveLeft();
-    }, 1000 / 60);
-
-    setInterval(() => {
-        this.playAnimation(this.IMAGES_WALKING);
-    }, 200);
-}
 }
