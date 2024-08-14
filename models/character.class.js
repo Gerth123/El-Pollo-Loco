@@ -17,6 +17,14 @@ class Character extends MovableObject {
     audio_elements = {
         background_music: new Audio('audio/music.mp3'),
         walking_sound: new Audio('audio/running.mp3'),
+        collect_bottle_sound: new Audio('audio/collect_bottle.mp3'),
+        jump_sound: new Audio('audio/jump.mp3'),
+        throw_bottle_sound: new Audio('audio/throw_bottle.mp3'),
+        hit_little_chicken: new Audio('audio/hit_little_chicken.mp3'),
+        bottle_smash_sound: new Audio('audio/bottle_smash.mp3'),
+        chicken_alarm_sound: new Audio('audio/chicken_alarm.mp3'),
+        collect_coin_sound: new Audio('audio/collect_coin.mp3'),
+        character_die_sound: new Audio('audio/character_die.mp3'),
     };
     previousSpeed;
 
@@ -139,6 +147,7 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.playAnimationOneTime(this.IMAGES_DEAD_BEFORE_JUMP, 150);
                 this.jump();
+                this.audio_elements.character_die_sound.play();
                 setTimeout(() => { this.playAnimationOneTime(this.IMAGES_DEAD_JUMP_AND_AFTER, 250); }, 200);
                 clearInterval(this.moveIntervall);
                 clearInterval(this.world.runInterval);
@@ -165,9 +174,9 @@ class Character extends MovableObject {
                 timer = 0;
             } else {
                 timer += 1;
-                if (timer >= 50 && timer < 100) {
+                if (timer >= 80 && timer < 120) {
                     this.playAnimation(this.IMAGES_IDLE);
-                } else if (timer >= 100) {
+                } else if (timer >= 120) {
                     this.playAnimation(this.IMAGES_LONG_IDLE);
                 }
             }
@@ -179,6 +188,7 @@ class Character extends MovableObject {
      */
     jump() {
         this.speedY = 27;
+        this.audio_elements.jump_sound.play();
     }
 
     /**
@@ -190,6 +200,7 @@ class Character extends MovableObject {
                 this.world.level.coins.splice(index, 1);
                 this.coins += 5;
                 this.world.statusBarCoins.setPercentage(this.coins);
+                this.audio_elements.collect_coin_sound.play();
             }
         });
 
@@ -198,6 +209,7 @@ class Character extends MovableObject {
                 this.world.level.bottles.splice(index, 1);
                 this.bottles += 5;
                 this.world.statusBarBottles.setPercentage(this.bottles);
+                this.audio_elements.collect_bottle_sound.play();
             }
         });
     }

@@ -113,6 +113,7 @@ class ThrowableObject extends MovableObject {
                 this.animateFlyingBottle();
             }
         }
+        world.character.audio_elements.throw_bottle_sound.play();
         this.thrownObjects.push(this);
     }
 
@@ -133,6 +134,7 @@ class ThrowableObject extends MovableObject {
         world.level.enemies.forEach((enemy, enemyIndex) => {
             this.thrownObjects.forEach((thrownObject, thrownObjectIndex) => {
                 if (thrownObject.isColliding(enemy)) {
+                    world.character.audio_elements.bottle_smash_sound.play();
                     if (enemy !== world.class_endboss) {
                         enemy.die();
                         setTimeout(() => { world.level.enemies.splice(enemyIndex, 1); }, 800);
@@ -147,9 +149,11 @@ class ThrowableObject extends MovableObject {
                     } 
                     thrownObject.smashed = true;
                     setTimeout(() => { this.thrownObjects.splice(thrownObjectIndex, 1) }, 1000);
-                } else if (!thrownObject.isColliding(enemy) && thrownObject.y >= 400) {
+                } else if (!thrownObject.isColliding(enemy) && thrownObject.y >= 395) {
                     thrownObject.smashed = true;
-                    setTimeout(() => { this.thrownObjects.splice(thrownObjectIndex, 1) }, 1000);
+                    world.character.audio_elements.bottle_smash_sound.play();
+                    console.log('game over');
+                    setTimeout(() => { this.thrownObjects.splice(thrownObjectIndex, 1) }, 500);
                 }
             })
         });

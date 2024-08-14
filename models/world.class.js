@@ -55,9 +55,11 @@ class World {
             if (this.character.isColliding(enemy) && this.character.y < 190 && enemy !== this.class_endboss && !hitEnemy && !this.character.energy <= 0) {
                 this.character.jump();
                 if (enemy.lives == 1) {
+                    this.character.audio_elements.hit_little_chicken.play();
                     enemy.die();
                     setTimeout(() => { this.level.enemies.splice(index, 1); }, 500);
                 } else if (enemy.lives > 1) {
+                    this.character.audio_elements.chicken_alarm_sound.play();
                     enemy.lives--;
                 }
                 hitEnemy = true;
