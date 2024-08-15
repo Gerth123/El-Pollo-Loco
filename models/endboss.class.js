@@ -12,9 +12,10 @@ class Endboss extends MovableObject {
     };
     img;
     hadFirstContact = false;
-    lifes = 10;
+    lives = 10;
     animationEndbossIndex = 0;
-    previousSpeed;
+    previousSpeed = 5;
+    pause = false;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -68,56 +69,120 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+     * Sets the interval to animate the endboss and checks if the first contact was made.
+     */
     animate() {
         setInterval(() => {
             if (this.hadFirstContact === true) {
-                if (this.animationEndbossIndex === 0) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                    this.speed = 5;
-                    this.moveLeft();
-                    setTimeout(() => { this.animationEndbossIndex = 1; }, 500);
-                } else if (this.animationEndbossIndex === 1) {
-                    this.playAnimation(this.IMAGES_ALERT);
-                    this.speed = 0;
-                    setTimeout(() => { this.animationEndbossIndex = 2; }, 500);
-                } else if (this.animationEndbossIndex === 2) {
-                    this.playAnimation(this.IMAGES_ATTACK);
-                    this.speed = 15;
-                    this.moveLeft();
-                } else if (this.animationEndbossIndex === 3) {
-                    this.playAnimation(this.IMAGES_HURT);
-                    this.speed = 0;
-                } else if (this.animationEndbossIndex === 4) {
-                    this.speed = 0;
-                    setInterval(() => { this.playAnimationOneTime(this.IMAGES_DEAD), 650 });
-                    setTimeout(() => { this.x = -1000 }, 650);
-                    document.getElementById("overlayWin").classList.remove("d-none");
-                    setTimeout(() => {
-                        document.getElementById("overlayWin").classList.add("d-none");
-                        document.getElementById("overlay").classList.remove("d-none");
-                        pauseGame();
-                    }, 2000);
-
-                }
+                this.hadFirstContactAnimation();
             }
         }, 100);
     }
 
-    hurt() {
-        this.animationEndbossIndex = 3;
-        this.lifes -= 1;
+    /**
+     * Animates the endboss if the first contact was made and checks the status of the animation.
+     */
+    hadFirstContactAnimation() {
+        if (this.animationEndbossIndex === 0 && this.pause === false) {
+            this.walkAnimation();
+        } else if (this.animationEndbossIndex === 1 && this.pause === false) {
+            this.alertAnimation();
+        } else if (this.animationEndbossIndex === 2 && this.pause === false) {
+            this.attackAnimation();
+        } else if (this.animationEndbossIndex === 3 && this.pause === false) {
+            this.playAnimation(this.IMAGES_HURT);
+            this.speed = 0;
+        } else if (this.animationEndbossIndex === 4 && this.pause === false) {
+            this.deadAnimation();
+        } else if (this.pause === true) {
+            this.loadImage(this.IMAGES_WALKING[0]);
+        }
+    }
+
+    /**
+     * Plays the animation of the endboss walking.
+     */
+    walkAnimation() {
+        world.character.audio_elements.angry_endboss_sound.play();
+        this.playAnimation(this.IMAGES_WALKING);
+        this.speed = 5;
+        this.moveLeft();
+        setTimeout(() => { this.animationEndbossIndex = 1; }, 500);
+    }
+
+    /**
+     * Plays the animation of the endboss alerting.
+     */
+    alertAnimation() {
+        this.playAnimation(this.IMAGES_ALERT);
+        this.speed = 0;
         setTimeout(() => { this.animationEndbossIndex = 2; }, 500);
     }
 
+    /**
+     * Plays the animation of the endboss attacking.
+     */
+    attackAnimation() {
+        this.playAnimation(this.IMAGES_ATTACK);
+        this.speed = 20;
+        this.moveLeft();
+    }
+
+    /**
+     * Plays the animation of the endboss dying.
+     */
+    deadAnimation() {
+        this.speed = 0;
+        setInterval(() => { this.playAnimationOneTime(this.IMAGES_DEAD), 650 });
+        setTimeout(() => { this.x = -1000 }, 650);
+        this.winningScreen();
+    }
+
+    /**
+     * Sets the winning screen.
+     */
+    winningScreen() {
+        document.getElementById("overlayWin").classList.remove("d-none");
+        setTimeout(() => {
+            document.getElementById("overlayWin").classList.add("d-none");
+            document.getElementById("overlay").classList.remove("d-none");
+            pauseGame();
+        }, 2000);
+        setTimeout(() => { window.location.reload() }, 2000);
+    }
+
+    /**
+     * Hurt the endboss.
+     */
+    hurt() {
+        this.animationEndbossIndex = 3;
+        this.lives -= 1;
+        world.statusBarEndboss.setPercentage(this.lives);
+        setTimeout(() => { this.animationEndbossIndex = 2; }, 500);
+    }
+
+    /**
+     * Die the endboss.
+     */
     die() {
         this.animationEndbossIndex = 4;
     }
 
-    pause() {
+    /**
+     * Pauses the game.
+     */
+    pauseGame() {
         this.previousSpeed = this.speed;
+        this.speed = 0;
+        this.pause = true;
     }
 
+    /**
+     * Unpauses the game.
+     */
     unpause() {
         this.speed = this.previousSpeed;
+        this.pause = false;
     }
 }

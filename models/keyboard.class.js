@@ -7,17 +7,17 @@ class Keyboard {
 
     /**
      * This function is used to add events to the mobile buttons.
-    */
+     */
     mobileBtnsPressEvents() {
-        btnLeft();
-        btnRight();
-        btnJump();
-        btnThrow();
+        this.btnLeft();
+        this.btnRight();
+        this.btnJump();
+        this.btnThrow();
     }
 
     /** 
-     * This function is used to add events for the left button.
-    */
+     * This function is used to add events for the left button on mobile devices.
+     */
     btnLeft() {
         document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -30,8 +30,8 @@ class Keyboard {
     }
 
     /**
-     * This function is used to add events for the right button.
-    */
+     * This function is used to add events for the right button on mobile devices.
+     */
     btnRight() {
         document.getElementById('btnRight').addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -44,8 +44,8 @@ class Keyboard {
     }
 
     /**
-     * This function is used to add events for the jump button.
-    */
+     * This function is used to add events for the jump button on mobile devices.
+     */
     btnJump() {
         document.getElementById('btnJump').addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -58,8 +58,8 @@ class Keyboard {
     }
 
     /**
-     * This function is used to add events for the throw button.
-    */
+     * This function is used to add events for the throw button on mobile devices.
+     */
     btnThrow() {
         document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -70,5 +70,4 @@ class Keyboard {
             this.D = false;
         });
     }
-
 }

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="responsive-style.css" />
     <title>El Pollo Loco</title>
     <link rel="icon" type="image/x-icon" href="img/7_statusbars/3_icons/icon_salsa_bottle.png" />
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/character.class.js"></script>
@@ -20,6 +21,7 @@
     <script src="models/status-bar-lives.class.js"></script>
     <script src="models/status-bar-bottles.class.js"></script>
     <script src="models/status-bar-coins.class.js"></script>
+    <script src="models/status-bar-endboss.class.js"></script>
     <script src="models/world.class.js"></script>
     <script src="models/background-object.class.js"></script>
     <script src="models/keyboard.class.js"></script>
@@ -28,7 +30,8 @@
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
   </head>
-  <body onload="init()">
+  <body>
+    <p class="msgTurnDevice" id="msgTurnDevice">Please turn your device in landscape mode!</p>
     <div id="fullscreen" class="fullscreen">
       <div class="gameScreenContainer">
         <h1>El Pollo Loco</h1>
@@ -71,13 +74,23 @@
             id="fullscreenTrue"
           />
         </div>
-        <div class="description">
+        <div class="description" id="description">
           <p>Left/Right =</p>
           <img src="img/icons/right_left.png" alt="arrow keys" class="descriptionImg" />
           <p>Jump =</p>
           <img src="img/icons/spacebar.png" alt="space" class="descriptionImgSpacebar" />
           <p>Throw Bottle =</p>
           <img src="img/icons/letter_d.png" alt="key D" class="descriptionImgD" />
+        </div>
+        <div class="mobileButtons">
+          <img src="img/icons/pause_button.png" alt="pause game" class="pauseGame" id="pauseGameMobile" onclick="pauseGameMobile()" />
+          <img src="img/icons/unpause_button.png" alt="unpause game" class="unpauseGame d-none" id="unpauseGameMobile" onclick="unpauseGameMobile()"/>
+          <img src="img/icons/enable_sound.png" alt="Disable Sound" class="disableSound" id="disableSoundMobile" onclick="disableSoundMobile()"/>
+          <img src="img/icons/disable_sound.png" alt="Enable Sound" class="enableSound d-none" id="enableSoundMobile" onclick="enableSoundMobile()"/>
+          <img src="img/icons/arrow_left_mobile.png" alt="Arrow left" class="arrowLeftMobile" id="btnLeft" onmousedown="setKeyTrue('LEFT')" onmouseup="setKeyFalse('LEFT')" ontouchstart="setKeyTrue('LEFT')" ontouchend="setKeyFalse('LEFT')"/>
+          <img src="img/icons/arrow_right_mobile.png" alt="Arrow right" class="arrowRightMobile" id="btnRight" onmousedown="setKeyTrue('RIGHT')" onmouseup="setKeyFalse('RIGHT')" ontouchstart="setKeyTrue('RIGHT')" ontouchend="setKeyFalse('RIGHT')"/>
+          <img src="img/icons/jump_mobile.png" alt="Jump" class="jumpMobile" id="btnJump" onmousedown="setKeyTrue('SPACE')" onmouseup="setKeyFalse('SPACE')" ontouchstart="setKeyTrue('SPACE')" ontouchend="setKeyFalse('SPACE')"/>
+          <img src="img/icons/bottle_mobile.png" alt="Throw bottle" class="throwBottleMobile" id="btnThrow" onmousedown="setKeyTrue('D')" onmouseup="setKeyFalse('D')" ontouchstart="setKeyTrue('D')" ontouchend="setKeyFalse('D')"/>
         </div>
       </div>
     </div>

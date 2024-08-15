@@ -25,8 +25,11 @@ class Character extends MovableObject {
         chicken_alarm_sound: new Audio('audio/chicken_alarm.mp3'),
         collect_coin_sound: new Audio('audio/collect_coin.mp3'),
         character_die_sound: new Audio('audio/character_die.mp3'),
+        game_over_sound: new Audio('audio/game_over.mp3'),
+        game_won_sound: new Audio('audio/game_won.mp3'),
+        angry_endboss_sound: new Audio('audio/angry_chicken.mp3'),
     };
-    previousSpeed;
+    previousSpeed = 10;
 
 
     IMAGES_WALKING = [
@@ -147,7 +150,7 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.playAnimationOneTime(this.IMAGES_DEAD_BEFORE_JUMP, 150);
                 this.jump();
-                this.audio_elements.character_die_sound.play();
+
                 setTimeout(() => { this.playAnimationOneTime(this.IMAGES_DEAD_JUMP_AND_AFTER, 250); }, 200);
                 clearInterval(this.moveIntervall);
                 clearInterval(this.world.runInterval);
@@ -155,16 +158,16 @@ class Character extends MovableObject {
                     this.y += 10;
                     this.x += 2;
                 }, 1000 / 25);
-
+                setTimeout(() => { this.audio_elements.game_over_sound.play(); }, 300);
                 document.getElementById('overlayLose').classList.remove('d-none');
                 setTimeout(() => {
                     document.getElementById('overlayLose').classList.add('d-none');
                     document.getElementById('overlay').classList.remove('d-none');
                 }, 2000);
-                clearInterval(intervalId);
-                disableSound();
+                setTimeout(() => { window.location.reload(); }, 1500);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
+                this.audio_elements.character_die_sound.play();
                 timer = 0;
             } else if (this.isAboveGround()) {
                 setTimeout(() => { this.playAnimation(this.IMAGES_JUMPING); }, 100);
@@ -180,7 +183,7 @@ class Character extends MovableObject {
                     this.playAnimation(this.IMAGES_LONG_IDLE);
                 }
             }
-        }, 1000/10);
+        }, 1000 / 10);
     }
 
     /**
@@ -192,9 +195,17 @@ class Character extends MovableObject {
     }
 
     /**
-     * This function checks if the character is colliding with an object and collects the object.
+     * This function combines the functions checkCollectObjects and checkBottles.
      */
     checkCollectObjects() {
+        this.checkCoins();
+        this.checkBottles();
+    }
+
+    /**
+     * This function checks if the character is colliding with a coin, plays a sound if it is and adds 5 points to the score.
+     */
+    checkCoins() {
         this.world.level.coins.forEach((coin, index) => {
             if (this.isColliding(coin) && this.energy > 0) {
                 this.world.level.coins.splice(index, 1);
@@ -203,7 +214,12 @@ class Character extends MovableObject {
                 this.audio_elements.collect_coin_sound.play();
             }
         });
+    }
 
+    /**
+     * This function checks if the character is colliding with a bottle, plays a sound if it is and adds 5 points to the score.
+     */
+    checkBottles() {
         this.world.level.bottles.forEach((bottle, index) => {
             if (this.isColliding(bottle) && this.energy > 0) {
                 this.world.level.bottles.splice(index, 1);

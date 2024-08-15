@@ -21,12 +21,22 @@ class StatusBarLives extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * This method sets the percentage.
+     * 
+     * @param {number} percentage - The count of the lives left.
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()]
         this.img = this.imageCache[path];
     }
 
+    /**
+     * This method resolves the index of the image.
+     * 
+     * @returns {number} - The index of the image.
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;

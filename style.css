@@ -37,6 +37,10 @@ a:hover {
     cursor: pointer;
 }
 
+.msgTurnDevice {
+    display: none
+}
+
 .panelUnderCanvas {
     display: flex;
     flex-direction: row;
@@ -81,8 +85,16 @@ a:hover {
     margin-right: 4px;
 }
 
+.pauseGame:hover {
+    cursor: pointer;
+}
+
 .unpauseGame {
     height: 50px;
+}
+
+.unpauseGame:hover {
+    cursor: pointer;
 }
 
 .disableSound {
@@ -90,9 +102,17 @@ a:hover {
     width: 50px;
 }
 
+.disableSound:hover {
+    cursor: pointer;
+}
+
 .enableSound {
     height: 42px;
     width: 50px;
+}
+
+.enableSound:hover {
+    cursor: pointer;
 }
 
 .fullscreenFalse {
@@ -100,25 +120,21 @@ a:hover {
     width: 50px;
 }
 
+.fullscreenFalse:hover {
+    cursor: pointer;
+}
+
 .fullscreenTrue {
     height: 40px;
     width: 50px;
 }
 
-.panelUnderCanvas img:hover {
+.fullscreenTrue:hover {
     cursor: pointer;
 }
 
-@media only screen and (max-width: 828px) {
-    canvas {
-        width: 100%;
-    }
-}
-
-@media only screen and (max-height: 552px) {
-    canvas {
-        height: 100svh;
-    }
+.panelUnderCanvas img:hover {
+    cursor: pointer;
 }
 
 .description {
@@ -327,4 +343,17 @@ a:hover {
 
 .privacyPolicyText {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.mobileButtons {
+    display: none;	
+}
+
+.arrowLeftMobile, .arrowRightMobile, .jumpMobile, .throwBottleMobile {
+    height: 40px;
+    width: 40px;
+}
+
+.arrowLeftMobile, .arrowRightMobile, .jumpMobile, .throwBottleMobile :hover {
+    cursor: pointer;
 }

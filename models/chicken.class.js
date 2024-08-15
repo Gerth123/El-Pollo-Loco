@@ -8,9 +8,10 @@ class Chicken extends MovableObject {
         width: 5,
         height: 20,
     };
-    previousSpeed;
+    previousSpeed = 0.15 + Math.random() * 0.25;
     dead = false;
     lives = 2;
+    speed;
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -22,11 +23,17 @@ class Chicken extends MovableObject {
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
-        this.x = 300 + Math.random() * 4000;
+        this.x = 500 + Math.random() * 4000;
         this.speed = 0.15 + Math.random() * 0.25;
         this.checkIfAlive();
+        this.animate();
     }
 
+    /**
+     * This function checks if the chicken is dead.
+     * 
+     * @returns {boolean} true if the chicken is dead, false if the chicken is alive.
+     */
     isDead() {
         if (this.dead) {
             return true;
@@ -35,27 +42,33 @@ class Chicken extends MovableObject {
         }
     }
 
-    isHit() {
-        if (condition) {
-
-        }
-    }
-
+    /**
+     * This function sets the state of the chicken to dead and sets the image to the dead image.
+     */
     die() {
         this.speed = 0;
         this.dead = true;
         this.loadImage(this.IMAGE_DEAD);
     }
 
+    /**
+     * This function pauses the chicken's animation and moves the chicken's speed to 0.
+     */
     pause() {
         this.previousSpeed = this.speed;
         this.speed = 0;
     }
 
+    /**
+     * This function unpauses the chicken's animation and sets the chicken's speed to the previous speed.
+     */
     unpause() {
         this.speed = this.previousSpeed;
     }
 
+    /**
+     * This function checks if the chicken is alive and if the chicken is dead, it stops the animation.
+     */
     checkIfAlive() {
         if (this.isDead()) {
             this.stopAnimation();
