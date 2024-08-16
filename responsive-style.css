@@ -64,8 +64,59 @@
     }
 }
 
+@media (max-height: 750px) {
+    .overlay {
+        justify-content: flex-start;
+    }
 
+    .startText {
+        margin-block: 0;
+        margin-top: -10svh;
+    }
 
+    .startImg {
+        margin-top: 0;
+    }
+
+    .legalNoticeAndPrivacyPolicyContainer {
+        position: absolute;
+        top: 1svh;
+        padding-top: 0;
+    }
+
+    .description {
+        position: absolute;
+        bottom: 0px;
+    }
+
+    .descriptionImgSpacebar {
+        width: 52px;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    canvas {
+        height: 80svh;
+    }
+
+    .panelUnderCanvas {
+        padding-right: 15%;
+    }
+
+    .overlayLose {
+        background-color: unset;
+    }
+
+    .overlayLoseImg {
+        height: 100svh;
+        border-radius: unset;
+        width: 100vw;
+        margin-top: 0;
+    }
+
+}
 
 @media only screen and (orientation: landscape) and (max-width: 828px) {
 
@@ -148,7 +199,8 @@
         height: 40px;
     }
 
-    .disableSound, .enableSound {
+    .disableSound,
+    .enableSound {
         height: 35px;
         width: 35px;
     }
@@ -166,7 +218,10 @@
         margin-right: 4px;
     }
 
-    .arrowLeftMobile, .arrowRightMobile, .jumpMobile, .throwBottleMobile {
+    .arrowLeftMobile,
+    .arrowRightMobile,
+    .jumpMobile,
+    .throwBottleMobile {
         height: 30px;
         width: 30px;
     }
@@ -199,15 +254,19 @@
     .description {
         display: none;
     }
+
+    .panelUnderCanvas {
+        display: none;
+    }
 }
 
 @media only screen and (orientation: portrait) and (max-width: 828px) {
     .gameScreenContainer {
-      display: none;
+        display: none;
     }
 
     .overlay {
-      display: none;
+        display: none;
     }
 
     body::before {
