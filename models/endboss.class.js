@@ -104,9 +104,11 @@ class Endboss extends MovableObject {
      * Plays the animation of the endboss walking.
      */
     walkAnimation() {
-        world.character.audio_elements.angry_endboss_sound.play();
+        if (world.character.musicEnabled) {
+            world.character.audio_elements.angry_endboss_sound.play();
+        }
         this.playAnimation(this.IMAGES_WALKING);
-        this.speed = 5;
+        this.speed = 10;
         this.moveLeft();
         setTimeout(() => { this.animationEndbossIndex = 1; }, 500);
     }
@@ -125,7 +127,7 @@ class Endboss extends MovableObject {
      */
     attackAnimation() {
         this.playAnimation(this.IMAGES_ATTACK);
-        this.speed = 20;
+        this.speed = 25;
         this.moveLeft();
     }
 

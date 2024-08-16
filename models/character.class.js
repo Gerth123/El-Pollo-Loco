@@ -31,6 +31,7 @@ class Character extends MovableObject {
     };
     previousSpeed = 10;
     characterPaused = false;
+    timer = 0;
 
 
     IMAGES_WALKING = [
@@ -120,79 +121,145 @@ class Character extends MovableObject {
      */
     animate() {
         this.moveIntervall = setInterval(() => {
-            this.audio_elements.walking_sound.pause();
-            if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.characterPaused) {
-                this.jump();
-            }
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.characterPaused) {
-                this.moveRight();
-                this.direction = 'right';
-                this.otherDirection = false;
-                if (this.musicEnabled) {
-                    this.audio_elements.walking_sound.play();
-                }
-            }
-            if (this.world.keyboard.LEFT && this.x > 0 && !this.characterPaused) {
-                this.moveLeft();
-                this.direction = 'left';
-                this.otherDirection = true;
-                if (this.musicEnabled) {
-                    this.audio_elements.walking_sound.play();
-                }
-            }
-
-            if (!this.isAboveGround()) {
-                this.y = 200;
-            }
-            this.world.camera_x = -this.x + 100;
+            this.characterMoveAnimation();
         }, 1000 / 60);
-        let timer = 0;
         let intervalId = setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimationOneTime(this.IMAGES_DEAD_BEFORE_JUMP, 150);
-                this.jump();
-
-                setTimeout(() => { this.playAnimationOneTime(this.IMAGES_DEAD_JUMP_AND_AFTER, 250); }, 200);
-                clearInterval(this.moveIntervall);
-                clearInterval(this.world.runInterval);
-                setInterval(() => {
-                    this.y += 10;
-                    this.x += 2;
-                }, 1000 / 25);
-                setTimeout(() => { this.audio_elements.game_over_sound.play(); }, 300);
-                document.getElementById('overlayLose').classList.remove('d-none');
-                setTimeout(() => {
-                    document.getElementById('overlayLose').classList.add('d-none');
-                    document.getElementById('overlay').classList.remove('d-none');
-                }, 2000);
-                setTimeout(() => { window.location.reload(); }, 1500);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-                this.audio_elements.character_die_sound.play();
-                timer = 0;
-            } else if (this.isAboveGround()) {
-                setTimeout(() => { this.playAnimation(this.IMAGES_JUMPING); }, 100);
-                timer = 0;
-            } else if (this.world.keyboard.RIGHT && !this.characterPaused || this.world.keyboard.LEFT && !this.characterPaused) {
-                this.playAnimation(this.IMAGES_WALKING);
-                timer = 0;
-            } else {
-                timer += 1;
-                if (timer >= 80 && timer < 120) {
-                    this.playAnimation(this.IMAGES_IDLE);
-                } else if (timer >= 120) {
-                    this.playAnimation(this.IMAGES_LONG_IDLE);
-                }
-            }
+            this.characterCheckStatusAnimation();
         }, 1000 / 10);
     }
 
     /**
-     * This function makes the character jump
+     * This function checks the right animation of the character when he moves.
+     */
+    characterMoveAnimation() {
+        this.audio_elements.walking_sound.pause();
+        if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.characterPaused) {
+            this.jump();
+        } else if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.characterPaused) {
+            this.moveCharacterToTheRight();
+        } else if (this.world.keyboard.LEFT && this.x > 0 && !this.characterPaused) {
+            this.moveCharacterToTheLeft();
+        } else if (!this.isAboveGround()) {
+            this.y = 200;
+        }
+        this.world.camera_x = -this.x + 100;
+    }
+
+    /**
+     * This function moves the character to the right.
+     */
+    moveCharacterToTheRight() {
+        this.moveRight();
+        this.direction = 'right';
+        this.otherDirection = false;
+        if (this.musicEnabled) {
+            this.audio_elements.walking_sound.play();
+        }
+    }
+
+    /**
+     * This function moves the character to the left.
+     */
+    moveCharacterToTheLeft() {
+        this.moveLeft();
+        this.direction = 'left';
+        this.otherDirection = true;
+        if (this.musicEnabled) {
+            this.audio_elements.walking_sound.play();
+        }
+    }
+
+
+    /**
+     * This function checks the status of the character and plays the right animation.
+     */
+    characterCheckStatusAnimation() {
+        if (this.isDead()) {
+            this.deadAnimation();
+        } else if (this.isHurt()) {
+            this.hurtAnimation();
+            this.timer = 0;
+        } else if (this.isAboveGround()) {
+            setTimeout(() => { this.playAnimation(this.IMAGES_JUMPING); }, 100);
+            this.timer = 0;
+        } else if (this.world.keyboard.RIGHT && !this.characterPaused || this.world.keyboard.LEFT && !this.characterPaused) {
+            this.playAnimation(this.IMAGES_WALKING);
+            this.timer = 0;
+        } else {
+            this.timer += 1;
+            this.characterSleepAnimation();
+        }
+    }
+
+    /**
+     * This function plays the animation of the character dying.
+     */
+    deadAnimation() {
+        this.playAnimationOneTime(this.IMAGES_DEAD_BEFORE_JUMP, 150);
+        this.jumpWithoutSound();
+        setTimeout(() => { this.playAnimationOneTime(this.IMAGES_DEAD_JUMP_AND_AFTER, 250); }, 200);
+        clearInterval(this.moveIntervall);
+        clearInterval(this.world.runInterval);
+        setInterval(() => {
+            this.y += 10;
+            this.x += 2;
+        }, 1000 / 25);
+        this.gameOver();
+    }
+
+    /**
+     * This function is used to end the game.
+     */
+    gameOver() {
+        if (this.musicEnabled) {
+            setTimeout(() => { this.audio_elements.game_over_sound.play(); }, 300);
+        }
+        document.getElementById('overlayLose').classList.remove('d-none');
+        setTimeout(() => {
+            document.getElementById('overlayLose').classList.add('d-none');
+            document.getElementById('overlay').classList.remove('d-none');
+        }, 2000);
+        setTimeout(() => { window.location.reload(); }, 1500);
+        // this.world.level = {};
+        // restartGame();
+    }
+
+    /**
+     * This function plays the animation of the character being hurt.
+     */
+    hurtAnimation() {
+        this.playAnimation(this.IMAGES_HURT);
+        if (this.musicEnabled) {
+            this.audio_elements.character_die_sound.play();
+        }
+    }
+
+    /**
+     * This function plays the animation of the character sleeping.
+     */
+    characterSleepAnimation() {
+        if (this.timer >= 2 && this.timer < 30) {
+            this.playAnimation(this.IMAGES_IDLE);
+        } else if (this.timer >= 30) {
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+        }
+    }
+
+    /**
+     * This function makes the character jump with a sound.
      */
     jump() {
         this.speedY = 27;
-        this.audio_elements.jump_sound.play();
+        if (this.musicEnabled) {
+            this.audio_elements.jump_sound.play();
+        }
+    }
+
+    /**
+     * This function makes the character jump without sound.
+     */
+    jumpWithoutSound() {
+        this.speedY = 27;
     }
 
     /**
@@ -212,7 +279,9 @@ class Character extends MovableObject {
                 this.world.level.coins.splice(index, 1);
                 this.coins += 5;
                 this.world.statusBarCoins.setPercentage(this.coins);
-                this.audio_elements.collect_coin_sound.play();
+                if (this.musicEnabled) {
+                    this.audio_elements.collect_coin_sound.play();
+                }
             }
         });
     }
@@ -226,7 +295,9 @@ class Character extends MovableObject {
                 this.world.level.bottles.splice(index, 1);
                 this.bottles += 5;
                 this.world.statusBarBottles.setPercentage(this.bottles);
-                this.audio_elements.collect_bottle_sound.play();
+                if (this.musicEnabled) {
+                    this.audio_elements.collect_bottle_sound.play();
+                }
             }
         });
     }

@@ -53,7 +53,9 @@ class ThrowableObject extends MovableObject {
         if (world.character.direction == 'left') {
             this.checkLeftThrow();
         }
-        world.character.audio_elements.throw_bottle_sound.play();
+        if (world.character.musicEnabled) {
+            world.character.audio_elements.throw_bottle_sound.play();
+        }
         this.thrownObjects.push(this);
     }
 
@@ -186,7 +188,9 @@ class ThrowableObject extends MovableObject {
                     this.collidingWithEnemy(enemy, thrownObject, thrownObjectIndex, enemyIndex);
                 } else if (!thrownObject.isColliding(enemy) && thrownObject.y >= 395) {
                     thrownObject.smashed = true;
-                    world.character.audio_elements.bottle_smash_sound.play();
+                    if (world.character.musicEnabled) {
+                        world.character.audio_elements.bottle_smash_sound.play();
+                    }
                     setTimeout(() => { this.thrownObjects.splice(thrownObjectIndex, 1) }, 500);
                 }
             })
@@ -204,7 +208,9 @@ class ThrowableObject extends MovableObject {
     collidingWithEnemy(enemy, thrownObject, thrownObjectIndex, enemyIndex) {
         if (!enemy || !thrownObject || thrownObject.hasCollided) return;
         thrownObject.hasCollided = true;
-        world.character.audio_elements.bottle_smash_sound.play();
+        if (world.character.musicEnabled) {
+            world.character.audio_elements.bottle_smash_sound.play();
+        }
         if (enemy !== world.class_endboss) {
             this.enemiesWithoutEndbossDieFromCollision(enemy, enemyIndex);
         } else if (enemy === world.class_endboss) {
@@ -242,7 +248,9 @@ class ThrowableObject extends MovableObject {
             setTimeout(() => {
                 world.level.enemies.splice(enemyIndex, 1);
             }, 200);
-            world.character.audio_elements.game_won_sound.play();
+            if (world.character.musicEnabled) {
+                world.character.audio_elements.game_won_sound.play();
+            }
         }
     }
 

@@ -1,6 +1,6 @@
 class World {
     character = new Character();
-    level = level1;
+    level = {};
     backUpLevel = _.cloneDeep(level1);
     canvas;
     ctx;
@@ -11,7 +11,7 @@ class World {
     statusBarCoins = new StatusBarCoins();
     statusBarEndboss = new StatusBarEndboss();
     throwableObjects = [];
-    class_endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
+    class_endboss;
     lastThrowTime = 0;
     throwCooldown = 500;
     runIntervall;
@@ -21,9 +21,18 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.setLevel();
         this.draw();
         this.setWorld();
         this.run();
+    }
+
+    /**
+     * Sets the level.
+     */
+    setLevel() {
+        this.level = level1;
+        this.class_endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
     }
 
     /**
@@ -88,11 +97,15 @@ class World {
     checkIfCharacterJumpsOnEnemy(enemy, index) {
         this.character.jump();
         if (enemy.lives == 1) {
-            this.character.audio_elements.hit_little_chicken.play();
+            if (this.character.musicEnabled) {
+                this.character.audio_elements.hit_little_chicken.play();
+            }
             enemy.die();
             setTimeout(() => { this.level.enemies.splice(index, 1); }, 500);
         } else if (enemy.lives > 1 && enemy !== this.class_endboss) {
-            this.character.audio_elements.chicken_alarm_sound.play();
+            if (this.character.musicEnabled) {
+                this.character.audio_elements.chicken_alarm_sound.play();
+            }
             enemy.lives--;
         }
     }

@@ -182,6 +182,7 @@ function unpauseGame() {
  * This function is used to start the game.
  */
 function startGame() {
+  world.character.y = 80;
   canvas.classList.remove('transparent');
   document.getElementById('panelUnderCanvas').classList.remove("transparent");
   document.getElementById("overlay").classList.add("d-none");
@@ -298,4 +299,10 @@ function unpauseGameMobile() {
   document.getElementById('pauseGameMobile').classList.remove("d-none");
   document.getElementById('unpauseGameMobile').classList.add("d-none");
   resetSpeed();
+}
+
+function restartGame() {
+
+  world = new World(canvas, keyboard);
+  pauseGame();
 }
