@@ -30,6 +30,7 @@ class Character extends MovableObject {
         angry_endboss_sound: new Audio('audio/angry_chicken.mp3'),
     };
     previousSpeed = 10;
+    characterPaused = false;
 
 
     IMAGES_WALKING = [
@@ -120,10 +121,10 @@ class Character extends MovableObject {
     animate() {
         this.moveIntervall = setInterval(() => {
             this.audio_elements.walking_sound.pause();
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.characterPaused) {
                 this.jump();
             }
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.characterPaused) {
                 this.moveRight();
                 this.direction = 'right';
                 this.otherDirection = false;
@@ -131,7 +132,7 @@ class Character extends MovableObject {
                     this.audio_elements.walking_sound.play();
                 }
             }
-            if (this.world.keyboard.LEFT && this.x > 0) {
+            if (this.world.keyboard.LEFT && this.x > 0 && !this.characterPaused) {
                 this.moveLeft();
                 this.direction = 'left';
                 this.otherDirection = true;
@@ -172,7 +173,7 @@ class Character extends MovableObject {
             } else if (this.isAboveGround()) {
                 setTimeout(() => { this.playAnimation(this.IMAGES_JUMPING); }, 100);
                 timer = 0;
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            } else if (this.world.keyboard.RIGHT && !this.characterPaused || this.world.keyboard.LEFT && !this.characterPaused) {
                 this.playAnimation(this.IMAGES_WALKING);
                 timer = 0;
             } else {
@@ -257,6 +258,7 @@ class Character extends MovableObject {
     pause() {
         this.previousSpeed = this.speed;
         this.speed = 0;
+        this.characterPaused = true;
     }
 
     /**
@@ -264,6 +266,7 @@ class Character extends MovableObject {
      */
     unpause() {
         this.speed = this.previousSpeed;
+        this.characterPaused = false;
     }
 
 }

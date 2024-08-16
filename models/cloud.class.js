@@ -3,7 +3,7 @@ class Cloud extends MovableObject {
     height = 250;
     width = 500;
     speed = Math.random() * 0.3 + 0.2;
-    previousSpeed;
+    previousSpeed = Math.random() * 0.3 + 0.2;
     
     
     constructor() {

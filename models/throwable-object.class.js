@@ -37,7 +37,7 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 80;
         this.width = 60;
-        this.throw(100, 150);
+        this.throw();
         this.collisionIntervall = setInterval(() => {
             this.checkCollisionSpecific();
         }, 50);

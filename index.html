@@ -30,7 +30,7 @@
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
   </head>
-  <body>
+  <body class="bodyMainPage" onload="init()">
     <p class="msgTurnDevice" id="msgTurnDevice">Please turn your device in landscape mode!</p>
     <div id="fullscreen" class="fullscreen">
       <div class="gameScreenContainer">
@@ -40,7 +40,7 @@
           <div class="overlayLose d-none" id="overlayLose">
             <img src="img/9_intro_outro_screens/game_over/oh no you lost!.png" class="overlayLoseImg" alt="You lost!" />
           </div>
-          <canvas id="canvas" width="828" height="552"> </canvas>
+          <canvas id="canvas" width="828" height="552" class="transparent"> </canvas>
         </div>
         <div class="overlay" id="overlay">
           <img src="img/9_intro_outro_screens/start/startscreen_2.png" alt="Startscreen" class="startImg" />
@@ -54,7 +54,7 @@
           <img src="img/9_intro_outro_screens/win/won_2.png" class="overlayWinImg" alt="You won!" />
         </div>
         <div class="overlayMenu d-none" id="overlayMenu"></div>
-        <div class="panelUnderCanvas">
+        <div class="panelUnderCanvas transparent" id="panelUnderCanvas">
           <img src="img/icons/pause_button.png" alt="pause game" class="pauseGame" id="pauseGame" onclick="pauseGame()" />
           <img src="img/icons/unpause_button.png" alt="unpause game" class="unpauseGame d-none" id="unpauseGame" onclick="unpauseGame()" />
           <img src="img/icons/enable_sound.png" alt="Disable Sound" class="disableSound" id="disableSound" onclick="disableSound()" />
@@ -83,14 +83,18 @@
           <img src="img/icons/letter_d.png" alt="key D" class="descriptionImgD" />
         </div>
         <div class="mobileButtons">
-          <img src="img/icons/pause_button.png" alt="pause game" class="pauseGame" id="pauseGameMobile" onclick="pauseGameMobile()" />
-          <img src="img/icons/unpause_button.png" alt="unpause game" class="unpauseGame d-none" id="unpauseGameMobile" onclick="unpauseGameMobile()"/>
-          <img src="img/icons/enable_sound.png" alt="Disable Sound" class="disableSound" id="disableSoundMobile" onclick="disableSoundMobile()"/>
-          <img src="img/icons/disable_sound.png" alt="Enable Sound" class="enableSound d-none" id="enableSoundMobile" onclick="enableSoundMobile()"/>
-          <img src="img/icons/arrow_left_mobile.png" alt="Arrow left" class="arrowLeftMobile" id="btnLeft" onmousedown="setKeyTrue('LEFT')" onmouseup="setKeyFalse('LEFT')" ontouchstart="setKeyTrue('LEFT')" ontouchend="setKeyFalse('LEFT')"/>
-          <img src="img/icons/arrow_right_mobile.png" alt="Arrow right" class="arrowRightMobile" id="btnRight" onmousedown="setKeyTrue('RIGHT')" onmouseup="setKeyFalse('RIGHT')" ontouchstart="setKeyTrue('RIGHT')" ontouchend="setKeyFalse('RIGHT')"/>
-          <img src="img/icons/jump_mobile.png" alt="Jump" class="jumpMobile" id="btnJump" onmousedown="setKeyTrue('SPACE')" onmouseup="setKeyFalse('SPACE')" ontouchstart="setKeyTrue('SPACE')" ontouchend="setKeyFalse('SPACE')"/>
-          <img src="img/icons/bottle_mobile.png" alt="Throw bottle" class="throwBottleMobile" id="btnThrow" onmousedown="setKeyTrue('D')" onmouseup="setKeyFalse('D')" ontouchstart="setKeyTrue('D')" ontouchend="setKeyFalse('D')"/>
+          <div class="mobileButtonsPauseAndSound">
+            <img src="img/icons/pause_button.png" alt="pause game" class="pauseGame" id="pauseGameMobile" onclick="pauseGameMobile()" />
+            <img src="img/icons/unpause_button.png" alt="unpause game" class="unpauseGame d-none" id="unpauseGameMobile" onclick="unpauseGameMobile()"/>
+            <img src="img/icons/enable_sound.png" alt="Disable Sound" class="disableSound" id="disableSoundMobile" onclick="disableSoundMobile()"/>
+            <img src="img/icons/disable_sound.png" alt="Enable Sound" class="enableSound d-none" id="enableSoundMobile" onclick="enableSoundMobile()"/>
+          </div>
+          <div class="mobileButtonsMove">
+            <img src="img/icons/arrow_left_mobile.png" alt="Arrow left" class="arrowLeftMobile" id="btnLeft" onmousedown="setKeyTrue('LEFT')" onmouseup="setKeyFalse('LEFT')" ontouchstart="setKeyTrue('LEFT')" ontouchend="setKeyFalse('LEFT')"/>
+            <img src="img/icons/jump_mobile.png" alt="Jump" class="jumpMobile" id="btnJump" onmousedown="setKeyTrue('SPACE')" onmouseup="setKeyFalse('SPACE')" ontouchstart="setKeyTrue('SPACE')" ontouchend="setKeyFalse('SPACE')"/>
+            <img src="img/icons/arrow_right_mobile.png" alt="Arrow right" class="arrowRightMobile" id="btnRight" onmousedown="setKeyTrue('RIGHT')" onmouseup="setKeyFalse('RIGHT')" ontouchstart="setKeyTrue('RIGHT')" ontouchend="setKeyFalse('RIGHT')"/>
+            <img src="img/icons/bottle_mobile.png" alt="Throw bottle" class="throwBottleMobile" id="btnThrow" onmousedown="setKeyTrue('D')" onmouseup="setKeyFalse('D')" ontouchstart="setKeyTrue('D')" ontouchend="setKeyFalse('D')"/>
+          </div>
         </div>
       </div>
     </div>

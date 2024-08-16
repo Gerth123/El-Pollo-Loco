@@ -1,6 +1,16 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+
+/**
+ * This function is used to initialize the game.
+ */
+function init() {
+  canvas = document.getElementById('canvas');
+  world = new World(canvas, keyboard);
+  pauseGame();
+}
+
 /**
  * This event is used to add events for the specific buttons on desktop if they are pressed.
  */
@@ -172,12 +182,14 @@ function unpauseGame() {
  * This function is used to start the game.
  */
 function startGame() {
+  canvas.classList.remove('transparent');
+  document.getElementById('panelUnderCanvas').classList.remove("transparent");
   document.getElementById("overlay").classList.add("d-none");
-  canvas = document.getElementById('canvas');
-  world = new World(canvas, keyboard);
   enableSound();
-  resetSpeed();
-  setTimeout(() => resetSpeedExceptCharacter(), 2000);
+  setTimeout(() => {
+    unpauseGame();
+  }, 500);
+
 }
 
 /**

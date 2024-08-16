@@ -11,6 +11,10 @@ body {
     margin: 0;
 }
 
+.bodyMainPage {
+    overflow: hidden;
+}
+
 h1 {
     color: rgb(237, 103, 54);
     font-size: 5em;
@@ -54,6 +58,11 @@ a:hover {
 
 .d-none {
     display: none !important;
+}
+
+.transparent {
+    opacity: 0;
+    z-index: -999;
 }
 
 .fullscreen {
@@ -346,7 +355,7 @@ a:hover {
 }
 
 .mobileButtons {
-    display: none;	
+    display: none;
 }
 
 .arrowLeftMobile, .arrowRightMobile, .jumpMobile, .throwBottleMobile {
@@ -354,6 +363,24 @@ a:hover {
     width: 40px;
 }
 
-.arrowLeftMobile, .arrowRightMobile, .jumpMobile, .throwBottleMobile :hover {
+.arrowLeftMobile, .arrowRightMobile, .jumpMobile, .throwBottleMobile:hover {
     cursor: pointer;
 }
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(251,227,192); 
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #f9ad21; 
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #ff8c00;
+    cursor: pointer
+};
