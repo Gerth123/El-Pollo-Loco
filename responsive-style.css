@@ -119,22 +119,9 @@
 }
 
 @media only screen and (orientation: landscape) and (max-width: 828px) {
-
-    /* .mobileButtons {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 95%;
-        height: 60px;
-        position: absolute;
-        bottom: 0svh;
-        z-index: 1;
-    }
-
     .description {
         display: none;
-    } */
+    }
 
     canvas {
         width: 100vw;
@@ -192,7 +179,7 @@
 
 @media only screen and (max-height: 552px) {
     canvas {
-        max-height: 100svh;
+        height: 100svh;
     }
 
     .mobileButtons {
@@ -242,13 +229,14 @@
     .mobileButtons {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         width: 95%;
-        height: 60px;
+        height: 40px;
         position: absolute;
         bottom: 0svh;
         z-index: 1;
+        gap: 50px;
     }
 
     .description {
@@ -260,7 +248,7 @@
     }
 }
 
-@media only screen and (orientation: portrait) and (max-width: 828px) {
+@media only screen and (orientation: portrait) and (pointer: coarse) {
     .gameScreenContainer {
         display: none;
     }
@@ -288,6 +276,45 @@
     }
 }
 
+@media only screen and (orientation: landscape) and (min-height: 750px) {
+    .mobileButtons {
+        bottom: 10svh;
+        height: 60px;
+    }
+
+    .mobileButtons img {
+        height: 50px;
+        width: 50px;
+    }
+
+    .mobileButtonsPauseAndSound {
+        display: flex;
+        align-items: center;
+    }
+
+    .mobileButtonsPauseAndSound img {
+        height: 60px;
+        width: 60px;
+    }
+
+    .pauseGame {
+        height: 48px !important;
+        width: 48px !important;
+        margin-right: 6px;
+        margin-left: 4px;
+    }
+
+    .startImg {
+        max-height: unset;
+        height: 90svh;
+    }
+
+    .startText {
+        margin-block: 0;
+        margin-top: -12svh;
+    }
+}
+
 
 @media only screen and (orientation: landscape) and (min-width: 900px) {
     .gameScreenContainer {
@@ -300,5 +327,26 @@
 
     .msgTurnDevice {
         display: none;
+    }
+
+    .startImg {
+        max-width: unset;
+    }
+}
+
+@media only screen and (orientation: landscape) and (min-height: 1000px) {
+    .mobileButtons {
+        bottom: 18svh;
+        gap: 100px;
+    }
+
+    .mobileButtons img {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .mobileButtonsPauseAndSound {
+        width: 70px !important;
+        height: 70px !important;
     }
 }
